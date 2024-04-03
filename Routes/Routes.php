@@ -96,19 +96,6 @@ return [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
         ]
     ],
-    'GET|/register' => [
-        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Register\Register::class,
-        'dependencies' => [
-            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
-        ]
-    ],
-    'POST|/register/signup' => [
-        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Register\Signup::class,
-        'dependencies' => [
-            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
-            \Josevaltersilvacarneiro\Html\Src\Classes\Mail\Mail::class,
-        ]
-    ],
     'GET|/confirm/email' => [
         'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Confirm\Email::class,
         'dependencies' => [
