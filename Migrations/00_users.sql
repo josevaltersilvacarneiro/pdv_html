@@ -18,4 +18,4 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-CREATE USER 'app'@'%' IDENTIFIED BY 'kaksqlkaalksldalkdn' ;
+CREATE USER 'app'@'%' IDENTIFIED BY 'kaksqlkaalksldalkdn';
