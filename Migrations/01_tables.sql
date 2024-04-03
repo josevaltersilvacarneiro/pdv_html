@@ -74,8 +74,3 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`sessions` (
 	CONSTRAINT fk2_sessions
 		FOREIGN KEY (last_request)	REFERENCES `requests`	(request_id)
 );
-
-/**
- -- business rules --
-*/
-

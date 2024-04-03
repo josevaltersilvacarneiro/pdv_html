@@ -23,5 +23,4 @@ cd Src/ && composer update && cd ../
 [ -f composer-setup.php ] && rm composer-setup.php
 cp example.env .env
 sudo apt install docker.io -y
-sudo docker run --name html_mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=database_html -p 3306:3306 -d mysql:latest
-php db.php
+sudo bash Migrations/create__container.sh

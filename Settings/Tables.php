@@ -37,4 +37,4 @@ declare(strict_types=1);
 
 define('_TB_REQUESTNAME', 'requests');
 define('_TB_SESSIONNAME', 'sessions');
-define('_TB_USERNAME',    'users');
+define('_TB_USERNAME',    'employees');
