@@ -77,7 +77,6 @@ class Container implements ContainerInterface
                     $reflectDependency = new \ReflectionClass($dependency);
                     return $reflectDependency->getMethod('fork')->invoke(null);
                 } catch (\ReflectionException $e) {
-                    echo var_dump($e);
                     throw new ContainerException(
                         "Error while retrieving the entry {$dependency}", 10, $e
                     );

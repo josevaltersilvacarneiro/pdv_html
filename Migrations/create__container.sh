@@ -18,4 +18,4 @@
 docker rmi josevaltersilvacarneiro/database_pdv:latest 2> /dev/null
 docker rm -f pdv_mysql > /dev/null 2>&1
 docker build -t josevaltersilvacarneiro/database_pdv:latest .
-docker run --name pdv_mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=database_pdv -p 3306:3306 -d josevaltersilvacarneiro/database_pdv:latest
+docker run --name pdv_mysql -e MYSQL_ROOT_PASSWORD="admin" -e MYSQL_DATABASE=database_pdv -p 3306:3306 -d josevaltersilvacarneiro/database_pdv:latest

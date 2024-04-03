@@ -1,0 +1,20 @@
+# .gitignore
+#
+# Author: José V S Carneiro <git@josevaltersilvacarneiro.net>
+# GPLv3
+
+.env
+
+Logs/
+
+# vendor
+Src/vendor/
+
+# generated automatically by composer
+Src/composer.lock
+
+# JavaScript will not compile
+Public/JavaScript
+
+# ignore the tests
+.phpunit.cache/

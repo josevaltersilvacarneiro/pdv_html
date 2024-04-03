@@ -23,4 +23,3 @@ cd Src/ && composer update && cd ../
 [ -f composer-setup.php ] && rm composer-setup.php
 cp example.env .env
 sudo apt install docker.io -y
-sudo bash Migrations/create__container.sh

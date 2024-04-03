@@ -12,7 +12,7 @@
   <source/>
   <php>
     <env name="HOST_MYSQL" value="127.0.0.1"/>
-    <env name="DB_MYSQL" value="database_html"/>
+    <env name="DB_MYSQL" value="database_pdv"/>
     <env name="USER_MYSQL" value="root"/>
     <env name="PASS_MYSQL" value="admin"/>
   </php>

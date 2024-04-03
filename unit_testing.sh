@@ -15,6 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-sudo bash create_container.sh
-sleep 120
+# sudo bash Migrations/create__container.sh
+
 Src/vendor/bin/phpunit
