@@ -33,6 +33,8 @@ declare(strict_types=1);
 
 namespace Josevaltersilvacarneiro\Html\App\Model\Entity;
 
+use Josevaltersilvacarneiro\Html\App\Model\Dao\PositionDao;
+
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\PositionEntityInterface;
 
 use Josevaltersilvacarneiro\Html\App\Model\Entity\EntityWithIncrementalPrimaryKey;
@@ -52,6 +54,7 @@ use Josevaltersilvacarneiro\Html\App\Model\Attributes\PaydayAttribute;
  * @version   Release: 0.0.1
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
+#[PositionDao]
 final class Position extends EntityWithIncrementalPrimaryKey implements
     PositionEntityInterface
 {
