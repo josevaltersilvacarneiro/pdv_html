@@ -28,3 +28,13 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`carts` (
 	CONSTRAINT fk1_carts
 		FOREIGN KEY (`order`)	REFERENCES `orders`	(order_id)
 );
+
+
+INSERT INTO `database_pdv`.`positions` (name, salary, payday)
+VALUES ("Operador de Caixa", 620, '10');
+
+-- uefs@josevaltersilvacarneiro.net
+-- TEST123456abcd
+
+INSERT INTO `database_pdv`.`employees` (position, fullname, email, hash_code)
+VALUES (1, "José Carneiro", "uefs@josevaltersilvacarneiro.net", "$argon2id$v=19$m=65536,t=4,p=1$bjRSdVVoL2VFNTZjL0dzdA$Q1rlcf8vsIriv+2voQHR2APyTer/Wst53KLfOyNiTT8");
