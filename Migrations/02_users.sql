@@ -1,5 +1,6 @@
 /**
- * Jumping to the next version: v2.
+ * This script starts all necessary databases
+ * and tables in the web project.
  *
  * Copyright (C) 2023, José V S Carneiro
  *
@@ -17,6 +18,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-ALTER TABLE users DROP CHECK users_chk_3;
 
-ALTER TABLE users ADD CONSTRAINT users_chk_3 CHECK ( CHAR_LENGTH(hash) > 40 );
+-- GRANT ALL PRIVILEGES ON *.* TO 'app1'@'%' WITH GRANT OPTION ;
+
+GRANT CREATE TEMPORARY TABLES, SELECT ON *.* TO 'app'@'%' WITH GRANT OPTION ;
+
+GRANT INSERT, UPDATE, DELETE ON database_pdv.positions TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT, UPDATE, DELETE ON database_pdv.employees TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT, UPDATE, DELETE ON database_pdv.requests TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT, UPDATE, DELETE ON database_pdv.sessions TO 'app'@'%' WITH GRANT OPTION ;
+
+GRANT EXECUTE ON database_pdv.* TO 'app'@'%' WITH GRANT OPTION ;
+
+-- DROP USER 'app'@'%' ;

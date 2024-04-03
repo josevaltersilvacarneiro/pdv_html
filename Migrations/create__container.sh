@@ -15,5 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-sudo docker rm -f html_mysql > /dev/null 2>&1
-sudo docker run --name html_mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=database_html -p 3306:3306 -d josevaltersilvacarneiro/database_html:latest
+docker rmi josevaltersilvacarneiro/database_pdv:latest 2> /dev/null
+docker rm -f pdv_mysql > /dev/null 2>&1
+docker build -t josevaltersilvacarneiro/database_pdv:latest .
+docker run --name pdv_mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=database_pdv -p 3306:3306 -d josevaltersilvacarneiro/database_pdv:latest
