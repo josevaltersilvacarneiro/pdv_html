@@ -36,6 +36,7 @@ namespace Josevaltersilvacarneiro\Html\App\Model\Entity;
 use Josevaltersilvacarneiro\Html\App\Model\Dao\UserDao;
 
 use Josevaltersilvacarneiro\Html\App\Model\Entity\EntityWithIncrementalPrimaryKey;
+use Josevaltersilvacarneiro\Html\App\Model\Entity\Position;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\UserEntityInterface;
 
 use Josevaltersilvacarneiro\Html\App\Model\Attributes\NameAttribute;
@@ -86,11 +87,12 @@ class User extends EntityWithIncrementalPrimaryKey implements UserEntityInterfac
      * @return void
      */
     public function __construct(
-        #[IncrementalPrimaryKeyAttribute('user_id')]
+        #[IncrementalPrimaryKeyAttribute('employee_id')]
         private ?IncrementalPrimaryKeyAttribute $_id,
+        #[Position('position')] private Position $_position,
         #[NameAttribute('fullname')] private NameAttribute $_name,
         #[EmailAttribute('email')] private EmailAttribute $_email,
-        #[HashAttribute('hash')] private HashAttribute $_hash,
+        #[HashAttribute('hash_code')] private HashAttribute $_hash,
         #[ActiveAttribute('active')] private ActiveAttribute $_active
     ) {
     }

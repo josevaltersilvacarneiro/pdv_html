@@ -31,6 +31,8 @@ declare(strict_types=1);
  * @link     https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
 
+namespace Josevaltersilvacarneiro\Html\App\Model\Entity;
+
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\PositionEntityInterface;
 
 use Josevaltersilvacarneiro\Html\App\Model\Entity\EntityWithIncrementalPrimaryKey;
