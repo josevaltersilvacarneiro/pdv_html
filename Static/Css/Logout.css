@@ -1,0 +1,71 @@
+@charset "UTF-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+/**
+ * This package is responsible for styling the web pages.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *                                      
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+body {
+    height: 100vh;
+    width: 100vw;
+}
+
+/* the code below works with the left side of the screen */
+/*--------------------------------------------------------*/
+
+#presentation {
+    background-color: var(--primary);
+    font-family: 'Montserrat', sans-serif;
+}
+
+#presentation__copyright, #presentation__title {
+    color: var(--quaternary);
+}
+
+#presentation__title {
+    font-size: 3em;
+}
+
+#presentation__title__emphasis {
+    color: var(--ternary);
+}
+
+/* the code below works with the right side of the screen */
+/*--------------------------------------------------------*/
+
+/* defines the right side to occupy 30% of the screen */
+#form {
+    background-color: var(--quaternary);
+}
+
+/* defines the occupation of the main area */
+#form > * {
+    width: 85%;
+}
+
+/* defines the form header where the logo is located to occupy 25% */
+#form__center__header {
+    height: 20%;
+}
+
+@media screen and (min-width: 768px) {
+    #form {
+        width: 25% !important;
+    }
+}

@@ -1,0 +1,75 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "Layout.html.twig" %}
+
+{% set PROFILE_ = IMG_ ~ "Profile.png" %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'Main.css' }}>
+{% endblock %}
+
+{% block content %}
+
+<main class="w-100 d-flex flex-column flex-sm-row">
+    <section id="main__nav" class="order-2 order-sm-1 w-100">
+        <div id="main__nav__header" class="header d-none d-sm-flex align-items-center">
+            <img src={{ IMG_ ~ "Logo__Two.png" }} class="h-100" alt="Profile">
+            <h1 class="nav__title fs-5 fw-semibold lh-base m-0 ms-1">HTML</h1>
+        </div>
+        <div id="main__nav__body" class="body w-100">
+            <div id="main__nav__body__btns" class="h-100 w-100 d-flex">
+                <ul class="home__list h-75 w-75 d-flex d-sm-block p-0 m-0">
+                    <li id="home__mvc" class="d-flex btn border border-0 rounded-0 m-2">
+                        <a href="{{ URL_ }}" class="h-100 w-100 d-flex align-items-center">
+                            <span class="material-symbols-outlined">library_books</span>
+                            <p class="d-none d-sm-block fs-6 fw-semibold m-0 ms-2">MVC</p>
+                        </a>
+                    </li>
+                    <li id="home__solid" class="d-flex btn border border-0 rounded-0 m-2">
+                        <a href="{{ URL_ ~ 'solid' }}" class="h-100 w-100 d-flex align-items-center">
+                            <span class="material-symbols-outlined fs-3 fw-normal">developer_mode_tv</span>
+                            <p class="d-none d-sm-block fs-6 fw-semibold m-0 ms-2">Solid</p>
+                        </a>
+                    </li>
+                    <li id="home__logout" class="d-flex btn border border-0 rounded-0 m-2">
+                        <a href="{{ URL_ ~ 'logout' }}" class="h-100 w-100 d-flex align-items-center">
+                            <span class="material-symbols-outlined">logout</span>
+                            <p class="d-none d-sm-block fs-6 fw-semibold m-0 ms-2">Logout</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="main__content" class="order-1 w-100 d-flex justify-content-center align-items-center">
+        <div id="main__content__body" class="body">
+
+            {% block main %}
+
+            {# your content here #}
+        
+            {% endblock %}
+
+        </div>
+    </section>
+</main>
+
+{% endblock %}

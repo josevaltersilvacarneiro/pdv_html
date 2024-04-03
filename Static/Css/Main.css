@@ -1,0 +1,93 @@
+@charset "UTF-8";
+
+/**
+ * This package is responsible for styling the web pages.
+ *                                       
+ * Copyright (C) 2023, José V S Carneiro
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.header {
+    height: 5%;
+}
+
+.body {
+    height: 93%;
+}
+
+.nav__title {
+    color: var(--quaternary);
+}
+
+/* the code below works with the left side of the screen */
+/*-------------------------------------------------------*/
+
+/* defines the width of the left side of the screen */
+#main__nav {
+    background-color: var(--primary);
+}
+
+#main__nav > div {
+    width: 95%;
+}
+
+.home__list {
+    list-style: none;
+}
+
+.home__list a, .home__list a:visited, .home__list a:link {
+    color: var(--quaternary);
+    text-decoration: none;
+    cursor: inherit;
+}
+
+/* the code below works with the right side of the screen */
+/*--------------------------------------------------------*/
+
+/* defines the width of the right side of the screen */
+#main__content {
+    background-color: var(--secondary);
+}
+
+#main__content__body {
+    width: 95%;
+}
+
+@media screen and (min-width: 768px) {
+
+    main {
+        height: 100vh;
+        width: 100vw;
+    }
+
+    #main__nav {
+        height: 100%;
+        width: 10% !important;
+    }
+
+    .home__list {
+        height: 100% !important;
+        width: 100% !important;
+    }
+
+    .btn {
+        cursor: not-allowed !important;
+    }
+
+    .btn:hover {
+        background-color: transparent !important;
+        cursor: pointer !important;
+    }
+}

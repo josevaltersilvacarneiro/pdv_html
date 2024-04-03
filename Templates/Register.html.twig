@@ -1,0 +1,45 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * @package     Josevaltersilvacarneiro\Html\App\View\Register
+#}
+
+{% extends "Credential.html.twig" %}
+
+{% set FORM_ACTION_ = URL_ ~ "register/signup" %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'Register.css' }}>
+{% endblock %}
+
+{# defines the route that will process the form #}
+{% block form_action FORM_ACTION_ %}
+
+{% block form %}
+    <div class="w-100 form__field">
+        <label for="form__center__body__name" class="h-25 d-flex align-items-center">Name</label>
+        <input type="text" id="form__center__body__name" name="name" class="w-100 h-75 form__field__element" placeholder="José da Silva" required autofocus></input>
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+{# defining the link and text below the form #}
+
+{% block link_below URL_ ~ 'login' %}
+{% block text_below "I already have an account" %}
