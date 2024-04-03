@@ -41,12 +41,6 @@ return [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
         ]
     ],
-    'GET|/sign' => [
-        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Sign\Sign::class,
-        'dependencies' => [
-            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
-        ]
-    ],
     'GET|/login' => [
         'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Login\Login::class,
         'dependencies' => [
