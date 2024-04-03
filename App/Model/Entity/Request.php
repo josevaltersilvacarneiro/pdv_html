@@ -61,7 +61,7 @@ use Josevaltersilvacarneiro\Html\Src\Interfaces\Attributes\PortAttributeInterfac
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.4.2
+ * @version   Release: 0.5.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
 #[RequestDao]
@@ -88,7 +88,7 @@ final class Request extends EntityWithIncrementalPrimaryKey implements
         private ?IncrementalPrimaryKeyAttribute $_id,
         #[IpAttribute('ip')] private IpAttribute $_ip,
         #[PortAttribute('port')] private PortAttribute $_port,
-        #[DateAttribute('access_date')] private DateAttribute $_access
+        #[DateAttribute('access_time')] private DateAttribute $_access
     ) {
         if ($_access > new DateAttribute()) {
             throw new \InvalidArgumentException("Invalid Date");
