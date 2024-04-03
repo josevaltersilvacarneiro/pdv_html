@@ -67,7 +67,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\CryptTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.10.2
+ * @version   Release: 0.11.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
 #[UserSessionDao]
@@ -91,8 +91,8 @@ final class Session extends Entity implements SessionEntityInterface
     public function __construct(
         #[GeneratedPrimaryKeyAttribute("session_id")] private
         GeneratedPrimaryKeyAttribute $_sessionId,
-        #[User("sessionuser")] private ?User $_sessionUser,
-        #[Request("request")] private Request $_request
+        #[User("employee")] private ?User $_sessionUser,
+        #[Request("last_request")] private Request $_request
     ) {
     }
 
