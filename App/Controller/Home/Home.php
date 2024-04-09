@@ -52,7 +52,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.1.0
+ * @version   Release: 0.2.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class Home extends HTMLController
@@ -65,14 +65,14 @@ final class Home extends HTMLController
     public function __construct(private readonly SessionEntityInterface $session)
     {
         $this->setPage('Home');
-        $this->setTitle('HTML - Welcome');
+        $this->setTitle('PDV - Bem-vindo');
         $this->setDescription(
             'The home page serves as the central hub of our system, providing users
 			with a comprehensive overview and access to various features. It welcomes
 			users with a personalized message and offers an intuitive navigation
 			menu to explore different sections of the system.'
         );
-        $this->setKeywords('MVC SOLID josevaltersilvacarneiro Home');
+        $this->setKeywords('PDV josevaltersilvacarneiro Home');
     }
 
     /**

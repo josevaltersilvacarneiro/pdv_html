@@ -29,6 +29,50 @@
 	text-indent:	2em;
 }
 
+.col__btn {
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: 50% 25%;
+}
+
+.row .btn {
+	color: var(--ternary);
+	background-color: var(--primary) !important;
+}
+
+.row .btn:hover {
+	color: var(--primary);
+	background-color: var(--ternary) !important;
+}
+
+.col__btn a {
+	text-decoration: none;
+}
+
+#row__cart {
+	background-image: url(../Images/Cart__Two.png);
+}
+
+#row__bleach {
+	background-image: url(../Images/Bleach.png);
+}
+
+#row__fax {
+	background-image: url(../Images/Fax.png);
+}
+
+#row__team {
+	background-image: url(../Images/Supplier.png);
+}
+
+#row__finance {
+	background-image: url(../Images/Money.png);
+}
+
+#row__package {
+	background-image: url(../Images/Pacote.png);
+}
+
 @media screen and (min-width: 768px) {
 
     #home__mvc {
