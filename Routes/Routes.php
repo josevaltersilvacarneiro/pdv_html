@@ -98,4 +98,11 @@ return [
     ],
 
     # Other pages
+
+    'GET|/item' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Home\Item::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
+        ]
+    ]
 ];

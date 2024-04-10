@@ -19,6 +19,8 @@
 
 {% extends "Main.html.twig" %}
 
+{% set _NEW_ITEM = URL_ ~ 'item' %}
+
 {% block css %}
     {{ parent() }}
     <link rel="stylesheet" href={{ CSS_ ~ 'Home.css' }}>
@@ -30,7 +32,7 @@
 <div class="h-75 w-75 container text-center">
     <div class="row justify-content-evenly h-50">
         <div class="col col__btn d-flex justify-content-center align-items-end" id="row__cart"><a href="" class="fw-bold fs-1 w-100 btn btn-primary border-0">Carrinho</a></div>
-        <div class="col col__btn d-flex justify-content-center align-items-end" id="row__bleach"><a href="" class="fw-bold fs-1 w-100 btn btn-primary border-0">Novo Item</a></div>
+        <div class="col col__btn d-flex justify-content-center align-items-end" id="row__bleach"><a href="{{ _NEW_ITEM }}" class="fw-bold fs-1 w-100 btn btn-primary border-0">Novo Item</a></div>
         <div class="col col__btn d-flex justify-content-center align-items-end" id="row__fax"><a href="" class="fw-bold fs-1 w-100 btn btn-primary border-0">Nova Compra</a></div>
     </div>
     <div class="row justify-content-evenly h-50">

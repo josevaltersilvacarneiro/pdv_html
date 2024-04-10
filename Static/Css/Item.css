@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+/**
+ * This package is responsible for styling the web pages.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#new__item > div {
+    border-bottom: 0.5vh solid var(--ternary);
+}
+
+form input {
+    outline: none;
+    color: var(--quaternary);
+    background-color: transparent;
+}
+
+form button[type=submit] {
+    height: 4vh;
+    color: var(--secondary);
+    background-color: var(--ternary);
+}
+
+form button[type=submit]:hover
+{
+    color: var(--primary);
+    background-color: var(--quaternary);
+}
+
+h2 {
+    color: var(--ternary);
+}
+
+#new__item {
+    color: var(--quaternary);
+}
