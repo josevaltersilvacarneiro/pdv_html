@@ -99,6 +99,20 @@ return [
 
     # Other pages
 
+    'GET|/ok' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\FS\Success::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
+        ]
+    ],
+
+    'GET|/failed' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\FS\Failed::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
     'GET|/item' => [
         'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Home\Item::class,
         'dependencies' => [

@@ -32,41 +32,40 @@ declare(strict_types=1);
  * @link     https://github.com/josevaltersilvacarneiro/html/tree/main/App/Controllers
  */
 
-namespace Josevaltersilvacarneiro\Html\App\Controller\Home;
+namespace Josevaltersilvacarneiro\Html\App\Controller\FS;
 
-use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\SessionEntityInterface;
+use Josevaltersilvacarneiro\Html\App\Controller\HTMLController;
+use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\{
+    SessionEntityInterface};
 
-use Josevaltersilvacarneiro\Html\App\Model\Repository\Repository;
-
+use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Nyholm\Psr7\Response;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * This class is responsible for processing the form
- * to add a new type of product.
+ * This class servers to present the ok status.
  * 
- * @category  AddItem
- * @package   Josevaltersilvacarneiro\Html\App\Controllers\AddItem
+ * @category  Success
+ * @package   Josevaltersilvacarneiro\Html\App\Controllers\Success
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.0.1
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
-final class AddItem implements RequestHandlerInterface
+final class Success extends HTMLController
 {
     /**
-     * Initializes the controller.
+     * Initializes the success object.
      * 
-     * @param SessionEntityInterface $_session session
-     * 
-     * @return void
+     * @param SessionEntityInterface $session session
      */
-    public function __construct(
-        private readonly SessionEntityInterface $_session
-    ) {  
+    public function __construct(private readonly SessionEntityInterface $_session)
+    {
+        $this->setPage('Success');
+        $this->setTitle('PDV - Tudo certo');
+        $this->setDescription('Esta página é exibida quando uma operação é bem-sucedida.');
+        $this->setKeywords('PDV Joilma josevaltersilvacarneiro Ok');
     }
 
     /**
@@ -74,7 +73,7 @@ final class AddItem implements RequestHandlerInterface
      * 
      * @param ServerRequestInterface $request request
      * 
-     * @return ResponseInterface response
+     * @return ReturnInterface response
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -82,31 +81,10 @@ final class AddItem implements RequestHandlerInterface
             return new Response(302, ['Location' => '/login']);
         }
 
-        // getting the parameters
-
-        $title = filter_input(INPUT_POST, 'title');
-        $title = mb_convert_case($title, MB_CASE_TITLE, "UTF-8");
-
-        $price = filter_input(INPUT_POST, 'price');
-        $price = mb_ereg_replace('\.', '', $price);
-        $price = mb_ereg_replace(',', '.', $price);
-
-        // using Repository to connect to table 'types_of_product'
-
-        $repository = new Repository();
-        $record = $repository->cleanCreate('types_of_product', ['title' => $title, 'price' => $price]);
-
-        if ($record === false) {
-            return new Response(302, ['Location' => '/failed']);
-        }
-
-        list($query, $record) = $record;
-        $stmt = $repository->query($query, $record);
-
-        if ($stmt !== false && $stmt->rowCount() > 0) {
-            return new Response(302, ['Location' => '/ok']);
-        }
-
-        return new Response(302, ['Location' => '/item']);
+        return new Response(
+            200, [
+                'Content-Type' => 'text/html;charset=UTF-8'
+            ], parent::renderLayout()
+        );
     }
 }
