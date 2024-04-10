@@ -104,5 +104,12 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
         ]
+    ],
+
+    'POST|/item/add' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Home\AddItem::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];

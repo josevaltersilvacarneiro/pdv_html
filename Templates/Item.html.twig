@@ -19,6 +19,8 @@
 
 {% extends "Main.html.twig" %}
 
+{% set PROCESS_ADD_ITEM_ = URL_ ~ 'item/add' %}
+
 {% block css %}
     {{ parent() }}
     <link rel="stylesheet" href={{ CSS_ ~ 'Item.css' }}>
@@ -31,7 +33,7 @@
     <div id="main__template__form" class="h-50">
         <h2>Adicione um novo Tipo de Produto</h2>
 
-        <form id="new__item">
+        <form id="new__item" method="POST" action="{{ PROCESS_ADD_ITEM_ }}">
 
         <div class="d-flex flex-column mt-2">
             <label for="title" class="fw-bold">Título:</label>
