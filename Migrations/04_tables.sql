@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`types_of_product` (
 	type_of_product_id  SMALLINT UNSIGNED	NOT NULL	AUTO_INCREMENT,
 
 	title		VARCHAR(32)		NOT NULL,
-	description	TEXT			NOT NULL,
 	price		DECIMAL(10, 2)	NOT NULL,
 
 	CONSTRAINT pk_types_of_product
