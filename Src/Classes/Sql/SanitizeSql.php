@@ -48,7 +48,7 @@ use Josevaltersilvacarneiro\Html\Src\Classes\Sql\Sql;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.5.3
+ * @version   Release: 0.5.4
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Classes/Sql
  */
 abstract class SanitizeSql extends Sql
@@ -87,7 +87,7 @@ abstract class SanitizeSql extends Sql
 	 * 
 	 * @return array|false tuple on success; false otherwise
 	 */
-	protected function cleanCreate(string $table, array $record): array|false
+	public function cleanCreate(string $table, array $record): array|false
 	{
 		if (!$this->_mapTable($table) || !$this->_areTypesValid($record)) {
 			return false;
