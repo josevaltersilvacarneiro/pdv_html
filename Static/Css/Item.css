@@ -51,7 +51,7 @@ h2 {
 
 @media screen and (min-width: 768px) {
 
-    #home__mvc {
+    #home__item {
 		background-color: var(--secondary) !important;
 	}
 }
