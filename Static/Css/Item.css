@@ -48,3 +48,10 @@ h2 {
 #new__item {
     color: var(--quaternary);
 }
+
+@media screen and (min-width: 768px) {
+
+    #home__mvc {
+		background-color: var(--secondary) !important;
+	}
+}
