@@ -119,7 +119,8 @@ final class ShowItems extends HTMLController
 
         $this->setVariables([
             'PRODUCT_LIST_' => $stmt === false ? [] : $stmt->fetchAll(\PDO::FETCH_ASSOC),
-            'PRODUCT_SEARCH_' => $product
+            'PRODUCT_SEARCH_' => $product,
+            'PAGINATION_' => $limit + 1
         ]);
 
         return new Response(
