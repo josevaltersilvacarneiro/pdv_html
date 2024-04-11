@@ -1,0 +1,66 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "Main.html.twig" %}
+
+{% set URL_ACTION_SEARCH_ = URL_ ~ 'show/items' %}
+{% set URL_ACTION_EDIT_ = URL_ ~ 'item/edit?id=' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'ShowItems.css' }}>
+{% endblock %}
+
+{% block main %}
+
+<section id="header" class="d-flex justify-content-center align-items-center">
+
+    <form id="header__form__search" class="h-50 d-flex" method="GET" action="{{ URL_ACTION_SEARCH_ }}">
+        <input type="text" id="header__form__search__text" name="product" class="border-0" placeholder="Digite o nome do produto" required autofocus>
+        <input type="submit" value="" id="header__form_search__submit" class="border-0">
+    </form>
+
+</section>
+
+<section id="footer">
+
+    {% for product in PRODUCT_LIST_ %}
+        <div class="footer__item mt-4 rounded-2 d-flex justify-content-center align-items-center">
+            <h2 class="fs-2 m-0"><span class="fw-bold">{{ product.type_of_product_id }}</span> - {{ product.title }}</h2>
+            <a href="{{ URL_ACTION_EDIT_ ~ product.type_of_product_id }}" class="rounded-circle"></a>
+        </div>
+    {% endfor %}
+
+    {% if PRODUCT_LIST_|length < 1 %}
+
+        <div class="w-100 d-flex justify-content-center mt-2">
+            <p id="footer__no__results" class="fs-1">Sem resultado</p>
+        </div>
+
+    {% elseif PRODUCT_LIST_|length > 9 %}
+
+        <div class="w-100 d-flex justify-content-center">
+            <a href="{{ URL_ACTION_SEARCH_ ~ '?product=' ~ PRODUCT_SEARCH_ ~ '&limit=2' }}" id="footer__next" class="fs-3 mt-3 w-25 btn btn-primary border-0">Next</a>
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

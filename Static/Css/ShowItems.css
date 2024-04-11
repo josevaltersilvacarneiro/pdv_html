@@ -1,0 +1,102 @@
+@charset "UTF-8";
+
+/**
+ * This package is responsible for styling the web pages.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#header {
+    height: 10vh;
+}
+
+#header__form__search {
+    width: 50%;
+    border: 0.2vh solid var(--quaternary);
+}
+
+#header__form__search__text, #header__form__search__text::placeholder {
+    color: var(--secondary);
+}
+
+#header__form__search__text {
+    width: 85%;
+    outline: none;
+    font-size: larger;
+    text-indent: 1%;
+    background-color: var(--ternary);
+}
+
+#header__form_search__submit {
+    width: 15%;
+    background-image: url(../Images/Search.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-color: var(--secondary);
+}
+
+#footer {
+    height: 75vh;
+}
+
+#footer__no__results {
+    color: var(--ternary);
+}
+
+#footer__next {
+    text-decoration: none;
+    color: var(--secondary);
+    background-color: var(--quaternary);
+}
+
+#footer__next:hover {
+    background-color: var(--ternary) !important;
+}
+
+.footer__item {
+    height: 5vh;
+    border: 0.1vh solid var(--quaternary);
+    color: var(--quaternary);
+    background-color: var(--secondary);
+}
+
+.footer__item a {
+    height: 4vh;
+    width: 4vh;
+    background-color: var(--secondary);
+    background-image: url(../Images/Close.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border-color: var(--quaternary);
+    border-style: solid;
+}
+
+.footer__item h2 {
+    width: 95%;
+}
+
+.footer__item span {
+    color: var(--ternary);
+}
+
+@media screen and (min-width: 768px) {
+
+    #home__show__items {
+		background-color: var(--secondary) !important;
+	}
+}
