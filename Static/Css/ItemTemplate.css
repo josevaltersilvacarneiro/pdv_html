@@ -19,9 +19,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-@media screen and (min-width: 768px) {
+#new__item > div {
+    border-bottom: 0.5vh solid var(--ternary);
+}
 
-    #home__item {
-		background-color: var(--secondary) !important;
-	}
+form input {
+    outline: none;
+    color: var(--quaternary);
+    background-color: transparent;
+}
+
+form button[type=submit] {
+    height: 4vh;
+    color: var(--secondary);
+    background-color: var(--ternary);
+}
+
+form button[type=submit]:hover
+{
+    color: var(--primary);
+    background-color: var(--quaternary);
+}
+
+h2 {
+    color: var(--ternary);
+}
+
+#new__item {
+    color: var(--quaternary);
 }

@@ -17,39 +17,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 #}
 
-{% extends "Main.html.twig" %}
+{% extends "ItemTemplate.html.twig" %}
 
-{% set PROCESS_ADD_ITEM_ = URL_ ~ 'item/add' %}
+{% set PROCESS_ = URL_ ~ 'item/add' %}
+{% set PAGE_TITLE_ = 'Adicione um novo Tipo de Produto' %}
 
 {% block css %}
     {{ parent() }}
     <link rel="stylesheet" href={{ CSS_ ~ 'Item.css' }}>
-{% endblock %}
-
-{% block main %}
-
-<div id="main__template" class="h-100 w-100 d-flex justify-content-center align-items-center">
-
-    <div id="main__template__form" class="h-50">
-        <h2>Adicione um novo Tipo de Produto</h2>
-
-        <form id="new__item" method="POST" action="{{ PROCESS_ADD_ITEM_ }}">
-
-        <div class="d-flex flex-column mt-2">
-            <label for="title" class="fw-bold">Título:</label>
-            <input type="text" id="title" class="border-0" name="title" required autofocus>
-        </div>
-
-        <div class="d-flex flex-column mt-2">
-            <label for="price" class="fw-bold">Preço:</label>
-            <input type="text" id="price" class="border-0" name="price" required pattern="^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$">
-        </div>
-
-        <button type="submit" class="w-100 fw-bold border-0 mt-2">Cadastrar</button>
-
-        </form>
-    </div>
-
-</div>
-
 {% endblock %}
