@@ -132,5 +132,23 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
+    ],
+
+    # the route above shows the item
+
+    'GET|/item/edit' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\EditItem::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
+    # the route above edits the item
+
+    'POST|/item/edit' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\EditItem::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];

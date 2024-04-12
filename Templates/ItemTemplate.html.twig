@@ -43,7 +43,7 @@
             <input type="text" id="price" value="{% block form_action_price FORM_PRICE_ %}" class="border-0" name="price" required pattern="^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$">
         </div>
 
-        <button type="submit" class="w-100 fw-bold border-0 mt-2">Cadastrar</button>
+        <button type="submit" class="w-100 fw-bold border-0 mt-2">{% block form_btn FORM_BTN_NAME_|default('Cadastrar') %}</button>
 
         </form>
     </div>

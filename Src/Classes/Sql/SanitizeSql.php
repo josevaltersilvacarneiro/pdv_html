@@ -130,7 +130,7 @@ abstract class SanitizeSql extends Sql
 	 * 
 	 * @return array|false tuple on success; false otherwise
 	 */
-	protected function cleanRead(string $table, array $record): array|false
+	public function cleanRead(string $table, array $record): array|false
 	{
 		if (!$this->_mapTable($table) || !$this->_areTypesValid($record)) {
 			return false;
@@ -168,7 +168,7 @@ abstract class SanitizeSql extends Sql
 	 * 
 	 * @return array|false tuple on success; false otherwise
 	 */
-	protected function cleanUpdate(string $table, array $record): array|false
+	public function cleanUpdate(string $table, array $record): array|false
 	{
 		if (!$this->_mapTable($table) || !$this->_areTypesValid($record)) {
 			return false;

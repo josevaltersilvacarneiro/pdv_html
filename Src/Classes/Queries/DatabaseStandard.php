@@ -184,10 +184,10 @@ class DatabaseStandard
         $set = implode(', ', preg_replace("/^(.*)$/", "\\1 = :\\1", $columns));
 
 		$query = <<<QUERY
-			UPDATE	`$table`
-			SET		$set
-			WHERE	$primaryKey = :$primaryKey
-			LIMIT 1;
+		UPDATE	`$table`
+		SET		$set
+		WHERE	$primaryKey = :$primaryKey
+		LIMIT 1;
 		QUERY;
 
 		return $query;

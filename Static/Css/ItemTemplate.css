@@ -19,6 +19,10 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#main__template__form {
+    width: 30%;
+}
+
 #new__item > div {
     border-bottom: 0.5vh solid var(--ternary);
 }
