@@ -114,21 +114,21 @@ return [
     ],
 
     'GET|/show/items' => [
-        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Home\ShowItems::class,
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\ShowItems::class,
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
     ],
 
     'GET|/item' => [
-        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Home\Item::class,
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\Item::class,
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class,
         ]
     ],
 
     'POST|/item/add' => [
-        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Home\AddItem::class,
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\AddItem::class,
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]

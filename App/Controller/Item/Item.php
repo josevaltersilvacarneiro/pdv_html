@@ -32,7 +32,7 @@ declare(strict_types=1);
  * @link     https://github.com/josevaltersilvacarneiro/html/tree/main/App/Controllers
  */
 
-namespace Josevaltersilvacarneiro\Html\App\Controller\Home;
+namespace Josevaltersilvacarneiro\Html\App\Controller\Item;
 
 use Josevaltersilvacarneiro\Html\App\Controller\HTMLController;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\{
@@ -50,7 +50,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class Item extends HTMLController

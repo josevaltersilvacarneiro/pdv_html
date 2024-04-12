@@ -32,45 +32,48 @@ declare(strict_types=1);
  * @link     https://github.com/josevaltersilvacarneiro/html/tree/main/App/Controllers
  */
 
-namespace Josevaltersilvacarneiro\Html\App\Controller\Home;
+namespace Josevaltersilvacarneiro\Html\App\Controller\Item;
 
-use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\SessionEntityInterface;
-
+use Josevaltersilvacarneiro\Html\App\Controller\HTMLController;
 use Josevaltersilvacarneiro\Html\App\Model\Repository\Repository;
+use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\{
+    SessionEntityInterface};
 
+use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Nyholm\Psr7\Response;
-use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * This class is responsible for processing the form
- * to add a new type of product.
+ * This class is responsible for controlling the search
+ * for items.
  * 
- * @category  AddItem
- * @package   Josevaltersilvacarneiro\Html\App\Controllers\AddItem
+ * @category  ShowItems
+ * @package   Josevaltersilvacarneiro\Html\App\Controllers\ShowItems
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.3
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
-final class AddItem implements RequestHandlerInterface
+final class ShowItems extends HTMLController
 {
     /**
-     * Initializes the controller.
+     * Initializes thw ShowItems Controller.
      * 
      * @param SessionEntityInterface $_session session
      * 
      * @return void
      */
-    public function __construct(
-        private readonly SessionEntityInterface $_session
-    ) {  
+    public function __construct(private readonly SessionEntityInterface $_session)
+    {
+        $this->setPage("ShowItems");
+        $this->setTitle("Produtos cadastrados");
+        $this->setDescription("Página com a lista dos produtos cadastrados.");
+        $this->setKeywords("PDV Joilma Produto josevaltersilvacarneiro");
     }
 
     /**
-     * Handles the request and produces a response.
+     * Handles the request and returns a response.
      * 
      * @param ServerRequestInterface $request request
      * 
@@ -82,31 +85,48 @@ final class AddItem implements RequestHandlerInterface
             return new Response(302, ['Location' => '/login']);
         }
 
-        // getting the parameters
+        // getting the variables limit and product
 
-        $title = filter_input(INPUT_POST, 'title');
-        $title = mb_convert_case($title, MB_CASE_TITLE, "UTF-8");
+        $limit = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT);
 
-        $price = filter_input(INPUT_POST, 'price');
-        $price = mb_ereg_replace('\.', '', $price);
-        $price = mb_ereg_replace(',', '.', $price);
+        $limit = $limit === false || is_null($limit) || $limit < 1 ? 1 : $limit;
+        $min = ($limit - 1) * 10;
+        $max = $limit * 10;
 
-        // using Repository to connect to table 'types_of_product'
+        $product = filter_input(INPUT_GET, 'product');
+
+        $record = ['min' => $min, 'max' => $max];
+        if ($product === false || is_null($product)) {
+
+            $product = '';
+
+            $query = <<<QUERY
+            SELECT type_of_product_id, title FROM `types_of_product`
+            LIMIT :min, :max;
+            QUERY;
+        } else {
+            $query = <<<QUERY
+            SELECT type_of_product_id, title FROM `types_of_product`
+            WHERE title LIKE :pattern
+            LIMIT :min, :max;
+            QUERY;
+
+            $record['pattern'] = '%' . mb_ereg_replace(' ', '%', $product) . '%';
+        }
 
         $repository = new Repository();
-        $record = $repository->cleanCreate('types_of_product', ['title' => $title, 'price' => $price]);
-
-        if ($record === false) {
-            return new Response(302, ['Location' => '/failed']);
-        }
-
-        list($query, $record) = $record;
         $stmt = $repository->query($query, $record);
 
-        if ($stmt !== false && $stmt->rowCount() > 0) {
-            return new Response(302, ['Location' => '/ok']);
-        }
+        $this->setVariables([
+            'PRODUCT_LIST_' => $stmt === false ? [] : $stmt->fetchAll(\PDO::FETCH_ASSOC),
+            'PRODUCT_SEARCH_' => $product,
+            'PAGINATION_' => $limit + 1
+        ]);
 
-        return new Response(302, ['Location' => '/failed']);
+        return new Response(
+            200, [
+                'Content-Type' => 'text/html;charset=UTF-8'
+            ], parent::renderLayout()
+        );
     }
 }
