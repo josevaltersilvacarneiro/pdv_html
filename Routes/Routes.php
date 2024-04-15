@@ -164,5 +164,12 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
+    ],
+
+    'GET|/ticket' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Ticket\NewTicket::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];
