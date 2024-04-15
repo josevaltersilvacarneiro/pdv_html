@@ -150,5 +150,19 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
+    ],
+
+    'GET|/supplier/add' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Supplier\NewSupplier::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
+    'POST|/supplier/process/add' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Supplier\ProcessNewSupplier::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];
