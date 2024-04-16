@@ -113,7 +113,7 @@ return [
         ]
     ],
 
-    'GET|/show/items' => [
+    'GET|/items' => [
         'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\ShowItems::class,
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class

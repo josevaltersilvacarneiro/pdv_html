@@ -81,9 +81,9 @@ final class ShowItems extends HTMLController
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        //if (!$this->_session->isUserLogged()) {
-        //    return new Response(302, ['Location' => '/login']);
-        //}
+        if (!$this->_session->isUserLogged()) {
+            return new Response(302, ['Location' => '/login']);
+        }
 
         // getting the variables limit and product
 
