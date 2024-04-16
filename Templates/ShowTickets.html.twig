@@ -1,0 +1,62 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "Main.html.twig" %}
+
+{% set URL_ACTION_SEARCH_ = URL_ ~ 'tickets' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'ShowTickets.css' }}>
+{% endblock %}
+
+{% block main %}
+
+{% if TICKET_LIST_|length > 0 %}
+
+<table class="w-100">
+    <tr id="main__title">
+        <th class="p-1">Fornecedor</th>
+        <th class="p-1">Preço</th>
+        <th class="p-1">Vencimento</th>
+    </tr>
+    {% for ticket in TICKET_LIST_ %}
+    <tr>
+        <td class="p-1">{{ ticket.name }}</td>
+        <td class="p-1">R$ {{ ticket.purchase_cost|replace({'.': ','}) }}</td>
+        <td class="p-1">{{ ticket.due_date|date('d/m/Y') }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% if TICKET_LIST_|length > 9 %}
+
+        <div class="w-100 d-flex justify-content-center">
+            <a href="{{ URL_ACTION_SEARCH_ ~ '?limit=' ~ PAGINATION_ }}" id="footer__next" class="fs-3 fw-bold mt-3 w-25 btn btn-outline-primary">Next</a>
+        </div>
+
+{% endif %}
+
+{% else %}
+    <div class="w-100 d-flex justify-content-center mt-2">
+        <p id="no__results" class="fs-1">Nenhum boleto cadastrado</p>
+    </div>
+{% endif %}
+
+{% endblock %}
