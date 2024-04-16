@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`loads` (
 	billet	VARCHAR(64),	-- IF THERE IS a billet to be paid
 
 	purchase_cost	DECIMAL(10, 2)	NOT NULL,
-	due_date		DATETIME		NOT NULL	DEFAULT CURRENT_DATE,
+	due_date		DATE			NOT NULL	DEFAULT (CURRENT_DATE),
 
 	CONSTRAINT pk_loads
 		PRIMARY KEY (load_id),
