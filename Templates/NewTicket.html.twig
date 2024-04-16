@@ -35,15 +35,15 @@
         <form id="form" method="POST" action="{{ PROCESS_ }}">
             <div class="d-flex flex-column mt-2">
                 <label for="form__price" class="fw-bold">Preço</label>
-                <input type="text" id="form_price" class="border-0" pattern="^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$" autofocus required>
+                <input type="text" id="form_price" name="price" class="border-0" pattern="^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$" autofocus required>
             </div>
             <div class="d-flex flex-column mt-2">
                 <label for="form__date" class="fw-bold">Vencimento</label>
-                <input type="date" id="form__date" class="border-0">
+                <input type="date" id="form__date" name="due_date" class="border-0">
             </div>
             <div class="d-flex flex-column mt-2">
                 <label for="form__supplier" class="fw-bold">Fornecedor</label>
-                <select id="form__supplier" class="border-0" name="supplier">
+                <select id="form__supplier" name="supplier" class="border-0" name="supplier">
 
                     {% if SUPPLIERS_LIST|length < 1 %}
                         <option value="0">Adicione um fornecedor</option>

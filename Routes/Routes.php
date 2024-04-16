@@ -171,5 +171,12 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
+    ],
+
+    'POST|/ticket/process/add' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Ticket\ProcessTicket::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];

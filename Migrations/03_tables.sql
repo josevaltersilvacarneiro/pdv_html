@@ -33,18 +33,16 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`suppliers` (
 
 CREATE TABLE IF NOT EXISTS `database_pdv`.`loads` (
 	load_id			INT UNSIGNED		        NOT NULL	AUTO_INCREMENT,
-	employee_who_registered	SMALLINT UNSIGNED	NOT NULL,
 	supplier		TINYINT UNSIGNED	        NOT NULL,
 
 	billet	VARCHAR(64),	-- IF THERE IS a billet to be paid
 
-	purchase_cost		DECIMAL(10, 2)	NOT NULL,
-	date_of_purchase	DATETIME		NOT NULL	DEFAULT CURRENT_TIMESTAMP,
+	purchase_cost	DECIMAL(10, 2)	NOT NULL,
+	due_date		DATETIME		NOT NULL	DEFAULT CURRENT_DATE,
 
 	CONSTRAINT pk_loads
 		PRIMARY KEY (load_id),
-	CONSTRAINT fk1_loads
-		FOREIGN KEY (employee_who_registered)	REFERENCES `employees`	(employee_id),
 	CONSTRAINT fk2_loads
 		FOREIGN KEY (supplier)		            REFERENCES `suppliers`	(supplier_id)
 );
+
