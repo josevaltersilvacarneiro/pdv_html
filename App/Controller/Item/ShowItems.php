@@ -48,11 +48,11 @@ use Psr\Http\Message\ServerRequestInterface;
  * for items.
  * 
  * @category  ShowItems
- * @package   Josevaltersilvacarneiro\Html\App\Controllers\ShowItems
+ * @package   Josevaltersilvacarneiro\Html\App\Controllers\Item
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.1.0
+ * @version   Release: 0.1.1
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ShowItems extends HTMLController
