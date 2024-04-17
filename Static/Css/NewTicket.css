@@ -41,7 +41,7 @@ input[type="date"] {
 @media screen and (min-width: 768px) {
 
     #template {
-        width: 30%;
+        width: 30% !important;
     }
 
     #home__ticket {
