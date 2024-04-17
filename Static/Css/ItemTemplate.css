@@ -19,36 +19,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#main__template__form {
-    width: 30%;
-}
-
 #new__item > div {
-    border-bottom: 0.5vh solid var(--ternary);
+    border-bottom: 0.2vh solid var(--ternary);
 }
 
 form input {
     outline: none;
-    color: var(--quaternary);
-    background-color: transparent;
-}
-
-form button[type=submit] {
-    height: 4vh;
-    color: var(--secondary);
-    background-color: var(--ternary);
-}
-
-form button[type=submit]:hover
-{
-    color: var(--primary);
-    background-color: var(--quaternary);
-}
-
-h2 {
     color: var(--ternary);
+    background-color: transparent;
 }
 
 #new__item {
     color: var(--quaternary);
+}
+
+@media screen and (min-width: 768px) {
+
+    #main__template__form {
+        width: 30% !important;
+    }
 }

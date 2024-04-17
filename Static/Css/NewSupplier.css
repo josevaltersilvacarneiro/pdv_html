@@ -19,16 +19,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-h2 {
-    color: var(--ternary);
-}
-
-#main__template__new {
-    width: 30%;
-}
-
 #main__template__new__supplier > div {
-    border-bottom: 0.5vh solid var(--ternary);
+    border-bottom: 0.2vh solid var(--ternary);
 }
 
 label {
@@ -37,17 +29,15 @@ label {
 
 form input {
     outline: none;
-    color: var(--quaternary);
+    color: var(--ternary);
     background-color: transparent;
 }
 
-form input[type=submit] {
-    height: 4vh;
-    color: var(--secondary);
-    background-color: var(--ternary);
-}
-
 @media screen and (min-width: 768px) {
+
+    #main__template__new {
+        width: 30%;
+    }
 
     #home__supplier__add {
 		background-color: var(--secondary) !important;

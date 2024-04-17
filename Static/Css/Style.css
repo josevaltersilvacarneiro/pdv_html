@@ -40,3 +40,10 @@ body
         small
         'Roboto', sans-serif;
 }
+
+.btn-outline-primary {
+    --bs-btn-color: var(--ternary);
+    --bs-btn-hover-color: var(--quaternary);
+    --bs-btn-border-color: var(--ternary);
+    --bs-btn-hover-border-color: var(--ternary);
+}

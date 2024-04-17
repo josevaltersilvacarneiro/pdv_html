@@ -19,24 +19,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#template {
-    width: 30%;
-}
-
-h2 {
-    color: var(--ternary);
-}
-
 #form > div {
-    border-bottom: 0.5vh solid var(--ternary);
+    border-bottom: 0.2vh solid var(--ternary);
 }
 
-label, input {
+label {
     color: var(--quaternary);
 }
 
 input, select {
     outline: none;
+    color: var(--ternary);
     background-color: transparent;
 }
 
@@ -45,13 +38,11 @@ input[type="date"] {
     filter: invert(1);
 }
 
-form input[type="submit"] {
-    height: 4vh;
-    color: var(--secondary);
-    background-color: var(--ternary);
-}
-
 @media screen and (min-width: 768px) {
+
+    #template {
+        width: 30%;
+    }
 
     #home__ticket {
 		background-color: var(--secondary) !important;
