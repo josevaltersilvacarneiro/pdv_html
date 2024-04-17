@@ -24,7 +24,6 @@
 }
 
 #header__form__search {
-    width: 50%;
     border: 0.2vh solid var(--quaternary);
 }
 
@@ -53,6 +52,10 @@
     height: 75vh;
 }
 
+#footer:first-child {
+    margin-top: 0 !important;
+}
+
 #footer__no__results {
     color: var(--ternary);
 }
@@ -69,9 +72,8 @@
 
 .footer__item {
     height: 5vh;
-    border: 0.1vh solid var(--quaternary);
     color: var(--quaternary);
-    background-color: var(--secondary);
+    background-color: rgba(15, 4, 76, 0.3);
 }
 
 .footer__item a {
@@ -95,6 +97,10 @@
 }
 
 @media screen and (min-width: 768px) {
+
+    #header__form__search {
+        width: 50% !important;
+    }
 
     #home__show__items {
 		background-color: var(--secondary) !important;
