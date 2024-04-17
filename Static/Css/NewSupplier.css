@@ -36,7 +36,7 @@ form input {
 @media screen and (min-width: 768px) {
 
     #main__template__new {
-        width: 30%;
+        width: 30% !important;
     }
 
     #home__supplier__add {
