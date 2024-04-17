@@ -36,7 +36,12 @@
 
 /* defines the width of the left side of the screen */
 #main__nav {
+    height: 10%;
     background-color: var(--primary);
+
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ternary);
 }
 
 #main__nav > div {
@@ -58,6 +63,7 @@
 
 /* defines the width of the right side of the screen */
 #main__content {
+    height: 90%;
     background-color: var(--secondary);
 }
 
@@ -67,11 +73,6 @@
 
 @media screen and (min-width: 768px) {
 
-    main {
-        height: 100vh;
-        width: 100vw;
-    }
-
     #main__nav {
         height: 100%;
         width: 10% !important;
@@ -80,6 +81,10 @@
     .home__list {
         height: 100% !important;
         width: 100% !important;
+    }
+
+    #main__content {
+        height: 100%;
     }
 
     .btn {
