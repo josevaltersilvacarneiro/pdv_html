@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`types_of_product` (
 
 CREATE TABLE IF NOT EXISTS `database_pdv`.`packages` (
 	package_id		INT UNSIGNED		NOT NULL	AUTO_INCREMENT,
-	load_id			INT UNSIGNED		NOT NULL,
 	type_of_product	SMALLINT UNSIGNED   NOT NULL,
 
 	bar_code		VARCHAR(13)		    NOT NULL	UNIQUE,
@@ -43,8 +42,6 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`packages` (
 
 	CONSTRAINT pk_packages
 		PRIMARY KEY (package_id),
-	CONSTRAINT fk1_packages
-		FOREIGN KEY (load_id)		        REFERENCES `loads`		(load_id),
 	CONSTRAINT fk2_packages
 		FOREIGN KEY (type_of_product)	REFERENCES `types_of_product`	(type_of_product_id)
 );

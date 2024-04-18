@@ -1,0 +1,64 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "Main.html.twig" %}
+
+{% set PROCESS_ = URL_ ~ 'package/process/add' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'Load.css' }}>
+{% endblock %}
+
+{% block main %}
+
+<div id="main__template" class="h-75 w-100 d-flex justify-content-center align-items-center">
+
+    <div id="main__template__form" class="w-100">
+
+        <form id="new__item" method="POST" action="{{ PROCESS_ }}">
+
+        <div class="d-flex flex-column mt-2">
+            <label for="code" class="fw-bold">Código:</label>
+            <input type="text" id="code" name="bar_code" class="border-0" placeholder="7891000315507" pattern="^[0-9]{13}$" required autofocus>
+        </div>
+
+        <div class="d-flex flex-column mt-2">
+            <label for="product" class="fw-bold">Produto:</label>
+            <input type="text" id="product" name="product" class="border-0" placeholder="5" required pattern="^[1-9][0-9]*$">
+        </div>
+
+        <div class="d-flex flex-column mt-2">
+            <label for="due_date" class="fw-bold">Vencimento:</label>
+            <input type="date" id="due_date" name="due_date" class="border-0" required>
+        </div>
+
+        <div class="d-flex flex-column mt-2">
+            <label for="amount" class="fw-bold">Quantidade:</label>
+            <input type="number" id="amount" name="amount" class="border-0" min="1" placeholder="10" required>
+        </div>
+
+        <button type="submit" class="w-100 fw-bold mt-2 btn btn-outline-primary">{% block form_btn FORM_BTN_NAME_|default('Cadastrar') %}</button>
+
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}

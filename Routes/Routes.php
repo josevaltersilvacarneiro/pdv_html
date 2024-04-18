@@ -185,5 +185,19 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
+    ],
+
+    'GET|/load' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Load\Load::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
+    'POST|/package/process/add' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Load\ProcessPackage::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];
