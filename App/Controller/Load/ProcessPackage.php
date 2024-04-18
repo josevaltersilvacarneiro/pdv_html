@@ -53,7 +53,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\DateTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessPackage implements RequestHandlerInterface
@@ -116,6 +116,14 @@ final class ProcessPackage implements RequestHandlerInterface
         $due_date = filter_input(INPUT_POST, 'due_date');
 
         if ($due_date === false || is_null($due_date) || !$this->_isDueDateValid($due_date)) {
+            return new Response(302, ['Location' => '/failed']);
+        }
+
+        $dt = \DateTimeImmutable::createFromFormat('Y-m-d', $due_date);
+        $today = new \DateTimeImmutable();
+        $today = $today->setTime(0, 0, 0, 0);
+
+        if (!$dt || $dt < $today) {
             return new Response(302, ['Location' => '/failed']);
         }
 
