@@ -43,6 +43,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Nyholm\Psr7\Response;
 use Psr\Http\Server\RequestHandlerInterface;
 
+use Josevaltersilvacarneiro\Html\Src\Traits\DateTrait;
+
 /**
  * This class process the new billet.
  * 
@@ -51,11 +53,13 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessTicket implements RequestHandlerInterface
 {
+    use DateTrait;
+
     /**
      * Initializes the ProcessTicket controller.
      * 
@@ -96,7 +100,7 @@ final class ProcessTicket implements RequestHandlerInterface
 
         $dueDate = filter_input(INPUT_POST, 'due_date');
         
-        if ($dueDate === false || is_null($dueDate) || !$this->isDueDateValid($dueDate)) {
+        if ($dueDate === false || is_null($dueDate) || !$this->_isDueDateValid($dueDate)) {
             return new Response(302, ['Location' => '/failed']);
         }
 
@@ -128,19 +132,5 @@ final class ProcessTicket implements RequestHandlerInterface
         }
 
         return new Response(302, ['Location' => '/failed']);
-    }
-
-    /**
-     * This method validates the due date.
-     * 
-     * @param string $date date to be validated
-     * @param string $format date format
-     * 
-     * @return bool true if is valid; false otherwise
-     */
-    private function isDueDateValid(string $date, string $format = "Y-m-d"): bool
-    {
-        $dt = \DateTime::createFromFormat($format, $date);
-        return $dt && $dt->format($format) === $date;
     }
 }
