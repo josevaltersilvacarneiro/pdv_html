@@ -1,0 +1,83 @@
+@charset "UTF-8";
+
+/**
+ * This package is responsible for styling the web pages.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *                                      
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#header {
+    height: 10%;
+}
+
+#header__left__code, #header__left__submit {
+    height: 5vh;
+    background-color: transparent;
+    border-bottom: 0.2vh solid var(--ternary) !important;
+}
+
+#header__left__code, #header__left__code::placeholder {
+    color: var(--ternary);
+}
+
+#header__left__submit {
+    width: 7%;
+    background-image: url(../Images/Plus.svg);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+input {
+    outline: none;
+}
+
+#main {
+    height: 90%;
+}
+
+table {
+    color: var(--quaternary);
+    border-collapse: collapse;
+}
+
+table:first-child {
+    background-color: var(--primary);
+}
+
+tr {
+    border: 0.2vh solid var(--quaternary);
+    
+}
+
+tr:nth-child(even) {
+    background-color: var(--ternary);
+}
+
+#main__total__price {
+    color: var(--quaternary);
+}
+
+#no__add__products {
+    color: var(--ternary);
+}
+
+@media screen and (min-width: 768px) {
+
+    #home__bag {
+		background-color: var(--secondary) !important;
+	}
+}

@@ -1,0 +1,78 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "Main.html.twig" %}
+
+{% set PROCESS_ = URL_ ~ 'cart/process/add' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'Cart.css' }}>
+{% endblock %}
+
+{% block main %}
+
+<div id="header" class="w-100 d-flex">
+
+    <div id="header__left" class="h-100 w-50 d-flex align-items-center">
+        <form class="w-100 d-flex" method="POST" action="{{ PROCESS_ }}">
+            <input type="hidden" name="order" value="{{ ORDER_ }}">
+            <input type="text" id="header__left__code" name="bar_code" class="border-0 fs-5" maxlength="13" placeholder="7891000315507" pattern="^[0-9]{13}$" required autofocus>
+            <input type="submit" id="header__left__submit" class="border-0" value="">
+        </form>
+    </div>
+
+    <div id="header__right" class="h-100 w-50 d-flex align-items-center flex-row-reverse">
+        <div class="w-50 d-flex justify-content-around align-items-center">
+            <a class="btn btn-outline-primary">Abandonar compra</a>
+            <a href="{{ URL_ ~ 'bag' }}" class="btn btn-outline-primary">Concluir compra</a>
+        </div>
+    </div>
+
+</div>
+
+<div id="main">
+    {% if ITEM_LIST_|length < 1 %}
+        <div class="w-100 d-flex justify-content-center mt-2">
+            <p id="no__add__products" class="fs-2">Nenhum produto adicionado</p>
+        </div>
+    {% else %}
+
+        <table class="w-100">
+        <tr id="main__title">
+            <th class="p-1">Produto</th>
+            <th class="p-1">Quantidade</th>
+            <th class="p-1">Preço</th>
+            <th class="p-1">Preço Total</th>
+        </tr>
+        {% for item in ITEM_LIST_ %}
+        <tr>
+            <td class="p-1">{{ item.title }}</td>
+            <td class="p-1">{{ item.amount }}</td>
+            <td class="p-1">R$ {{ item.price|replace({'.': ','}) }}</td>
+            <td class="p-1">{{ item.total|replace({'.': ','}) }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+
+        <p id="main__total__price" class="fs-1 ml-1 fw-bold">R$ <span class="fw-bold">{{ TOTAL_PRICE_|replace({'.': ','}) }}</span></p>
+    {% endif %}
+</div>
+
+{% endblock %}

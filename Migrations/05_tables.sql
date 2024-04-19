@@ -18,18 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-CREATE TABLE IF NOT EXISTS `database_pdv`.`carts` (
-	cart_id		SMALLINT UNSIGNED	NOT NULL	AUTO_INCREMENT, -- 65 * 10^3
-
-	`order`		INT UNSIGNED		NOT NULL,			-- order in processing
-
-	CONSTRAINT pk_carts
-		PRIMARY KEY (cart_id),
-	CONSTRAINT fk1_carts
-		FOREIGN KEY (`order`)	REFERENCES `orders`	(order_id)
-);
-
-
 INSERT INTO `database_pdv`.`positions` (name, salary, payday)
 VALUES ("Operador de Caixa", 620, '10');
 

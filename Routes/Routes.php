@@ -199,5 +199,19 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
+    ],
+
+    'GET|/bag' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Cart\Cart::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
+    'POST|/cart/process/add' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Cart\ProcessCart::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
     ]
 ];
