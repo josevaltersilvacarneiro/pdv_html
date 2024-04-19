@@ -44,6 +44,7 @@ use Nyholm\Psr7\Response;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use Josevaltersilvacarneiro\Html\Src\Traits\DateTrait;
+use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
 
 /**
  * This class is responsible for adding a new package to system.
@@ -53,12 +54,13 @@ use Josevaltersilvacarneiro\Html\Src\Traits\DateTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.0.3
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessPackage implements RequestHandlerInterface
 {
     use DateTrait;
+    use BarCodeTrait;
 
     /**
      * Initializes the ProcessPackage controller.
@@ -172,26 +174,5 @@ final class ProcessPackage implements RequestHandlerInterface
         }
 
         return new Response(200, ['Location' => '/ok']);
-    }
-
-    /**
-     * The method above verifies if the bar code is valid.
-     * 
-     * @param string $code bar code ean13
-     * 
-     * @return bool true on success; false otherwise
-     */
-    private function _isCodeValid(string $code): bool
-    {
-        $codeArray = array_map(function ($element): int {
-            return intval($element);
-        }, str_split($code));
-
-        $sumPairs = $codeArray[1] + $codeArray[3] + $codeArray[5] + $codeArray[7] + $codeArray[9] + $codeArray[11];
-        $oddSum = $codeArray[0] + $codeArray[2] + $codeArray[4] + $codeArray[6] + $codeArray[8] + $codeArray[10];
-        $result = $oddSum + $sumPairs * 3;
-        $checkDigit = 10 - $result % 10;
-
-        return $checkDigit === $codeArray[12];
     }
 }
