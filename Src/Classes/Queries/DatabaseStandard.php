@@ -43,7 +43,7 @@ namespace Josevaltersilvacarneiro\Html\Src\Classes\Queries;
  * @method string generateDeleteStandard(string $table, array $uniqueIdentifiers)
  * 
  * @author		José V S Carneiro <git@josevaltersilvacarneiro.net>
- * @version		0.6
+ * @version		0.7
  * @see			https://en.wikipedia.org/wiki/SQL
  * @copyright	Copyright (C) 2023, José V S Carneiro
  * @license		GPLv3
@@ -113,7 +113,7 @@ class DatabaseStandard
 	 * @return string @example "INSERT INTO tbFOO (fooID, fooBAR) VALUES (:fooID, :fooBAR);"
 	 * 
 	 * @author		José V S Carneiro <git@josevaltersilvacarneiro.net>
-	 * @version		0.3
+	 * @version		0.4
 	 * @access		public
 	 * @see			https://www.php.net/manual/en/function.implode.php
 	 * @see			https://www.php.net/manual/en/function.preg-replace.php
@@ -128,8 +128,8 @@ class DatabaseStandard
             preg_replace("/^(.*)$/", ":\\1", $requiredColumns));
 
 		$query = <<<QUERY
-			INSERT INTO `$table`
-			($columns) VALUES ($values);
+		INSERT INTO `$table`
+		($columns) VALUES ($values);
 		QUERY;
 
 		return $query;
@@ -171,7 +171,7 @@ class DatabaseStandard
 	 * @return string @example "UPDATE tbFOO SET fooBAR = :fooBAR WHERE fooID = :fooID LIMIT 1;"
 	 * 
 	 * @author		José V S Carneiro <git@josevaltersilvacarneiro.net>
-	 * @version		0.3
+	 * @version		0.4
 	 * @access		public
 	 * @see			https://www.php.net/manual/en/function.implode.php
 	 * @see			https://www.php.net/manual/en/function.preg-replace.php
@@ -181,12 +181,12 @@ class DatabaseStandard
     public static function generateUpdateStandard(string $table,
 		string $primaryKey, array $columns): string
     {
-        $set = implode(', ', preg_replace("/^(.*)$/", "\\1 = :\\1", $columns));
+        $set = implode(', ', preg_replace("/^(.*)$/", "`\\1` = :\\1", $columns));
 
 		$query = <<<QUERY
 		UPDATE	`$table`
 		SET		$set
-		WHERE	$primaryKey = :$primaryKey
+		WHERE	`$primaryKey` = :$primaryKey
 		LIMIT 1;
 		QUERY;
 
