@@ -19,12 +19,12 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#header {
-    height: 10%;
+header {
+    height: 25%;
 }
 
 #header__left__code, #header__left__submit {
-    height: 5vh;
+    height: 7vh;
     background-color: transparent;
     border-bottom: 0.2vh solid var(--ternary) !important;
 }
@@ -34,19 +34,23 @@
 }
 
 #header__left__submit {
-    width: 7%;
+    width: 15%;
     background-image: url(../Images/Plus.svg);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: contain;
 }
 
+#header__right__ac {
+    height: 10vh;
+}
+
 input {
     outline: none;
 }
 
-#main {
-    height: 90%;
+input[type="text"] {
+    width: 85%;
 }
 
 table {
@@ -60,11 +64,14 @@ table:first-child {
 
 tr {
     border: 0.2vh solid var(--quaternary);
-    
 }
 
 tr:nth-child(even) {
     background-color: var(--ternary);
+}
+
+td {
+    font-size: 0.9em;
 }
 
 #main__total__price {
@@ -80,4 +87,36 @@ tr:nth-child(even) {
     #home__bag {
 		background-color: var(--secondary) !important;
 	}
+
+    .hlr__device {
+        width: 50% !important;
+    }
+
+    #header {
+        height: 10%;
+    }
+
+    #header__left__code, #header__left__submit {
+        height: 5vh;
+    }
+
+    input[type="text"] {
+        width: 50%;
+    }
+
+    #header__left__submit {
+        width: 7%;
+    }
+
+    #main {
+        height: 90%;
+    }
+
+    td {
+        font-size: 1.15em;
+    }
+
+    #main__total__price {
+        font-size: 2em !important;
+    }
 }

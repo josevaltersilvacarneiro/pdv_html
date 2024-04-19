@@ -28,18 +28,18 @@
 
 {% block main %}
 
-<div id="header" class="w-100 d-flex">
+<div id="header" class="w-100 d-sm-flex">
 
-    <div id="header__left" class="h-100 w-50 d-flex align-items-center">
+    <div id="header__left" class="hlr__device h-100 w-100 d-flex align-items-center">
         <form class="w-100 d-flex" method="POST" action="{{ PROCESS_ }}">
             <input type="hidden" name="order" value="{{ ORDER_ }}">
-            <input type="text" id="header__left__code" name="bar_code" class="border-0 fs-5" maxlength="13" placeholder="7891000315507" pattern="^[0-9]{13}$" required autofocus>
+            <input type="text" id="header__left__code" name="bar_code" class="border-0 fs-4" maxlength="13" placeholder="7891000315507" pattern="^[0-9]{13}$" required autofocus>
             <input type="submit" id="header__left__submit" class="border-0" value="">
         </form>
     </div>
 
-    <div id="header__right" class="h-100 w-50 d-flex align-items-center flex-row-reverse">
-        <div class="w-50 d-flex justify-content-around align-items-center">
+    <div id="header__right" class="h-100 w-100 d-flex align-items-center flex-row-reverse">
+        <div id="header__right__ac" class="hlr__device w-100 d-flex justify-content-around align-items-center">
             <a class="btn btn-outline-primary">Abandonar compra</a>
             <a href="{{ URL_ ~ 'bag' }}" class="btn btn-outline-primary">Concluir compra</a>
         </div>
@@ -59,7 +59,7 @@
             <th class="p-1">Produto</th>
             <th class="p-1">Quantidade</th>
             <th class="p-1">Preço</th>
-            <th class="p-1">Preço Total</th>
+            <th class="p-1">Total</th>
         </tr>
         {% for item in ITEM_LIST_ %}
         <tr>
@@ -71,7 +71,7 @@
         {% endfor %}
         </table>
 
-        <p id="main__total__price" class="fs-1 ml-1 fw-bold">R$ <span class="fw-bold">{{ TOTAL_PRICE_|replace({'.': ','}) }}</span></p>
+        <p id="main__total__price" class="fs-3 ml-1 fw-bold">R$ <span class="fw-bold">{{ TOTAL_PRICE_|replace({'.': ','}) }}</span></p>
     {% endif %}
 </div>
 
