@@ -41,7 +41,7 @@
     {% if ITEM_LIST_|length > 0 %}
         <div id="header__right" class="h-100 w-100 d-flex align-items-center flex-row-reverse">
             <div id="header__right__ac" class="hlr__device w-100 d-flex justify-content-between align-items-center">
-                <a class="btn btn-outline-primary">Abandonar compra</a>
+                <a href="{{ URL_ ~ 'abandon?order=' ~ ORDER_ }}" class="btn btn-outline-primary">Abandonar compra</a>
                 <a href="{{ URL_ ~ 'bag' }}" class="btn btn-outline-primary">Concluir compra</a>
             </div>
         </div>

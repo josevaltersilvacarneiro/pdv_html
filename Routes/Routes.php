@@ -221,4 +221,11 @@ return [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
     ],
+
+    'GET|/abandon' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Cart\AbandonCart::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
 ];
