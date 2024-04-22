@@ -108,6 +108,10 @@ td {
         width: 7%;
     }
 
+    #header__right__ac {
+        justify-content: space-evenly !important;
+    }
+
     #main {
         height: 90%;
     }
