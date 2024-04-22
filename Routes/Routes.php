@@ -213,5 +213,12 @@ return [
         'dependencies' => [
             \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
         ]
-    ]
+    ],
+
+    'GET|/orders' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Order\OrderList::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
 ];

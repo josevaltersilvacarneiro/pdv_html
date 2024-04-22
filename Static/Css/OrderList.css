@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+/**
+ * This package is responsible for styling the web pages.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by  
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+.footer__item {
+    height: 5vh;
+    color: var(--quaternary);
+    background-color: rgba(15, 4, 76, 0.3);
+}
+
+.footer__item:first-of-type {
+    margin-top: 0px !important;
+}
+
+.footer__item h2 {
+    width: 95%;
+}
+
+.footer__item span {
+    color: var(--ternary);
+}
+
+.footer__item a {
+    height: 4vh;
+    width: 4vh;
+    background-image: url(../Images/Note.png);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+#footer__no__results {
+    color: var(--ternary);
+}
+
+@media screen and (min-width: 768px) {
+
+    #home__order {
+        background-color: var(--secondary);
+    }
+}

@@ -1,0 +1,52 @@
+{#
+ * This package is responsible for displaying the html elements.
+ * 
+ * Copyright (C) 2023, José V S Carneiro
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,    
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+#}
+
+{% extends "Main.html.twig" %}
+
+{% set URL_ACTION_CART_ = URL_ ~ 'bag?order=' %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href={{ CSS_ ~ 'OrderList.css' }}>
+{% endblock %}
+
+{% block main %}
+
+{% for order in ORDER_LIST_ %}
+    <div class="footer__item mt-2 p-4 p-sm-1 mt-sm-3 rounded-4 d-flex justify-content-center align-items-center">
+        <h2 class="fs-2 m-0">O pedido <span>{{ order.order_id }}</span> realizado no dia <span>{{ order.order_date|date('d/m/Y à\\s H:i') }}</span> custou <span>{{ order.total|replace({'.': ','}) }} R$</span></h2>
+        <a href="{{ URL_ACTION_CART_ ~ order.order_id }}" class="border-0" title="Verificar"></a>
+    </div>
+{% endfor %}
+
+{% if ORDER_LIST_|length < 1 %}
+
+    <div class="w-100 d-flex justify-content-center mt-2">
+        <p id="footer__no__results" class="fs-1">Sem resultado</p>
+    </div>
+
+{% elseif ORDER_LIST_|length > 9 %}
+
+    <div class="w-100 d-flex justify-content-center">
+        <a href="{{ URL_ ~ 'orders?limit=' ~ PAGINATION_ }}" class="fs-3 mt-3 w-25 btn btn-outline-primary">Next</a>
+    </div>
+
+{% endif %}
+
+{% endblock %}
