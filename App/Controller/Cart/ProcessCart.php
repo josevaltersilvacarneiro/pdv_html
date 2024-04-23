@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.4
+ * @version   Release: 0.0.5
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -183,15 +183,14 @@ final class ProcessCart implements RequestHandlerInterface
 
             $itemQuery = <<<QUERY
             UPDATE `order_items`
-            SET `amount` = :amount
+            SET `amount` = `amount` + 1
             WHERE `package` = :package AND `order` = :order
             LIMIT 1;
             QUERY;
 
             $itemRecord = [
                 'order' => intval($itemRecord['order']),
-                'package' => intval($itemRecord['package']),
-                'amount' => intval($itemRecord['amount']) + 1
+                'package' => intval($itemRecord['package'])
             ];
 
             $query1 = [$itemQuery, $itemRecord];
