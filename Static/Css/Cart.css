@@ -54,6 +54,7 @@ input[type="text"] {
 }
 
 table {
+    font-size: 0.8em;
     color: var(--quaternary);
     border-collapse: collapse;
 }
@@ -114,6 +115,10 @@ td {
 
     #main {
         height: 90%;
+    }
+
+    table {
+        font-size: 1em;
     }
 
     td {

@@ -68,7 +68,7 @@
             <td class="p-1">{{ item.title }}</td>
             <td class="p-1">{{ item.amount }}</td>
             <td class="p-1">R$ {{ item.price|replace({'.': ','}) }}</td>
-            <td class="p-1">{{ item.total|replace({'.': ','}) }}</td>
+            <td class="p-1">R$ {{ item.total|replace({'.': ','}) }}</td>
         </tr>
         {% endfor %}
         </table>
