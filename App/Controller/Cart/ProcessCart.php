@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.7
+ * @version   Release: 0.0.8
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -135,13 +135,10 @@ final class ProcessCart implements RequestHandlerInterface
 
         $packageRecord = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        $packagePurchased = intval($packageRecord['number_of_items_purchased']);
-        $packageSold = intval($packageRecord['number_of_items_sold']);
-        $stock = $packagePurchased - $packageSold;
-
-        // without stock
-
-        if ($stock < 1) {
+        if (!$this->_isThereStockInThePackage(
+            $packageRecord['number_of_items_purchased'],
+            $packageRecord['number_of_items_sold']
+        )) {
             return new Response(302, ['Location' => '/bag?order=' . $order]);
         }
 
@@ -203,6 +200,24 @@ final class ProcessCart implements RequestHandlerInterface
         $repository->queryAll($query1, $query2); // ignore result
 
         return new Response(200, ['Location' => '/bag?order=' . $order]);
+    }
+
+    /**
+     * This method verifies if there is stock.
+     * 
+     * @param string $numberOfItemsPurchased purchased items
+     * @param string $numberOfItemsSold sold items
+     * 
+     * @return bool true on success; false otherwise
+     */
+    private function _isThereStockInThePackage(
+        string $numberOfItemsPurchased, string $numberOfItemsSold
+    ): bool {
+        $packagePurchased = intval($packageRecord['number_of_items_purchased']);
+        $packageSold = intval($packageRecord['number_of_items_sold']);
+        $stock = $packagePurchased - $packageSold;
+
+        return $stock > 0;
     }
 
     /**
