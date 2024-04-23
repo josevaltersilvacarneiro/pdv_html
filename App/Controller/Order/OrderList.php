@@ -53,7 +53,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2024 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class OrderList extends HTMLController
@@ -96,7 +96,7 @@ final class OrderList extends HTMLController
 
         $query = <<<QUERY
         SELECT (
-            SELECT sum(price * amount) AS total FROM `order_items` AS i WHERE i.order = o.order_id
+            SELECT COALESCE(SUM(price * amount), 0) AS total FROM `order_items` AS i WHERE i.order = o.order_id
         ) AS total, order_date, order_id
         FROM `orders` AS o
         ORDER BY o.order_date DESC
