@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.3
+ * @version   Release: 0.0.4
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -136,11 +136,14 @@ final class ProcessCart implements RequestHandlerInterface
         QUERY;
 
         $stmt = $repository->query($query, ['bar_code' => $bar_code]);
-        
+
+        // there was an error or this package doesn't exist
+
         if ($stmt === false || $stmt->rowCount() < 1) {
-            // there was an error or this package doesn't exist
             return new Response(302, ['Location' => '/bag?order=' . $order]);
         }
+
+        // getting the package
 
         $packageRecord = $stmt->fetch(\PDO::FETCH_ASSOC);
 
@@ -148,9 +151,13 @@ final class ProcessCart implements RequestHandlerInterface
         $packageSold = intval($packageRecord['number_of_items_sold']);
         $stock = $packagePurchased - $packageSold;
 
+        // without stock
+
         if ($stock < 1) {
             return new Response(302, ['Location' => '/bag?order=' . $order]);
         }
+
+        // updating the number of items sold
 
         $package = intval($packageRecord['package_id']);
         $packageRecord = [
@@ -189,8 +196,6 @@ final class ProcessCart implements RequestHandlerInterface
 
             $query1 = [$itemQuery, $itemRecord];
             $query2 = $repository->cleanUpdate('packages', $packageRecord);
-
-            //echo var_dump($query1); exit();
 
             $repository->queryAll($query1, $query2); // ignore result
 
