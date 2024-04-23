@@ -38,10 +38,6 @@
 #main__nav {
     height: 10%;
     background-color: var(--primary);
-
-    overflow: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--ternary);
 }
 
 #main__nav > div {

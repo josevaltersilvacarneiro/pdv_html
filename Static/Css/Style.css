@@ -42,6 +42,12 @@ body
         'Roboto', sans-serif;
 }
 
+.scrollbar {
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--ternary);
+}
+
 .btn-outline-primary {
     --bs-btn-color: var(--ternary);
     --bs-btn-hover-color: var(--quaternary);
