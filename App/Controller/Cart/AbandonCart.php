@@ -52,7 +52,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class AbandonCart implements RequestHandlerInterface
@@ -104,12 +104,12 @@ final class AbandonCart implements RequestHandlerInterface
 
         // decrease the items sold from package and delete all items
 
-        $allItemsDeleted = true;
+        $queries = [];
         foreach ($orderItems as $item) {
             $orderId = intval($item['order']);
             $packageId = intval($item['package']);
 
-            // WARNING -> the code below doesn't verifying if
+            // WARNING -> the code below doesn't checking if
             // the number_of_items_sold = 0 (it would be an
             // inconsistency in the database)
 
@@ -134,13 +134,7 @@ final class AbandonCart implements RequestHandlerInterface
                 ['order' => $orderId, 'package' => $packageId]
             ];
 
-            $stmt = $repository->queryAll($record1, $record2);
-
-            $allItemsDeleted = $stmt !== false && $stmt->rowCount() > 0;
-        }
-
-        if (!$allItemsDeleted) {
-            return new Response(302, ['Location' => '/failed']);
+            array_push($queries, $record1, $record2);
         }
 
         // delete order
@@ -150,7 +144,13 @@ final class AbandonCart implements RequestHandlerInterface
         WHERE `order_id` = :order
         QUERY;
 
-        $stmt = $repository->query($query, ['order' => $orderId]);
+        $orderRecord = [$query, [
+            'order' => $orderId
+        ]];
+
+        array_push($queries, $orderRecord);
+
+        $stmt = $repository->queryAll(...$queries);
 
         if ($stmt !== false && $stmt->rowCount() > 0) {
             return new Response(200, ['Location' => '/ok']);
