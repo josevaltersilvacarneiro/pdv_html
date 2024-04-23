@@ -72,6 +72,8 @@
 
 .footer__item {
     height: 5vh;
+    padding-left: 0.75vh !important;
+    padding-right: 0.75vh !important;
     color: var(--quaternary);
     background-color: rgba(15, 4, 76, 0.3);
 }
@@ -97,6 +99,14 @@
 }
 
 @media screen and (min-width: 768px) {
+
+    .footer__item {
+        padding: 0 !important;
+    }
+
+    .footer__item h2 {
+        font-size: 1.15em !important;
+    }
 
     #header__form__search {
         width: 50% !important;
