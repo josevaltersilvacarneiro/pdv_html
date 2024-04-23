@@ -38,7 +38,7 @@
             </div>
             <div class="d-flex flex-column mt-2">
                 <label for="form__date" class="fw-bold">Vencimento</label>
-                <input type="date" id="form__date" name="due_date" class="border-0">
+                <input type="date" id="form__date" name="due_date" class="border-0" value="{{ TODAY_DATE_ }}" min="{{ TODAY_DATE_ }}" required>
             </div>
             <div class="d-flex flex-column mt-2">
                 <label for="form__supplier" class="fw-bold">Fornecedor</label>

@@ -53,7 +53,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class NewTicket extends HTMLController
@@ -95,8 +95,11 @@ final class NewTicket extends HTMLController
 
         $stmt = $repository->query($query);
 
+        $today = new \DateTimeImmutable();
+
         $this->setVariables([
-            'SUPPLIERS_LIST' => $stmt === false ? [] : $stmt->fetchAll(\PDO::FETCH_ASSOC)
+            'SUPPLIERS_LIST' => $stmt === false ? [] : $stmt->fetchAll(\PDO::FETCH_ASSOC),
+            'TODAY_DATE_' => $today->format('Y-m-d')
         ]);
 
         return new Response(
