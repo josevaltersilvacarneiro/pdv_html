@@ -20,6 +20,8 @@
  */
 
 .footer__item {
+    padding-left: 0.6vh !important;
+    padding-right: 0.6vh !important;
     height: 5vh;
     color: var(--quaternary);
     background-color: rgba(15, 4, 76, 0.3);
@@ -31,6 +33,7 @@
 
 .footer__item h2 {
     width: 95%;
+    font-size: 0.9em;
 }
 
 .footer__item span {
@@ -54,5 +57,9 @@
 
     #home__order {
         background-color: var(--secondary) !important;
+    }
+
+    .footer__item h2 {
+        font-size: 1.15em;
     }
 }
