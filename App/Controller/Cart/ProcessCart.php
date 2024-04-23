@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.0.3
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -100,24 +100,26 @@ final class ProcessCart implements RequestHandlerInterface
             return new Response(302, ['Location' => '/orders']);
         }
 
-        if ($order === false || is_null($order) || $order === 0) {
+        // if the order doesn't exist
+
+        if ($order === false || is_null($order) || $order < 1) {
 
             $dao = new GenericDao(Connect::newMysqlConnection(), 'orders');
 
             $order_date = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
-            $order = $dao->ic(['order_date' => $order_date->format('Y-m-d H:i:s')]);
+            $order = $dao->ic([
+                'order_date' => $order_date->format('Y-m-d H:i:s')
+            ]);
 
-            if ($order === false) { // Unable to include
-                return new Response(302, ['Location' => '/bag?order=' . $order]);
+            // Unable to include
+
+            if ($order === false) {
+                return new Response(302, ['Location' => '/bag']);
             }
 
             // conversion to int
 
             $order = intval($order);
-        }
-
-        if ($order < 1) { // bug
-            return new Response(302, ['Location' => '/bag']);
         }
 
         // adding a item to order
