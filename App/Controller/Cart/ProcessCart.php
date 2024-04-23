@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -94,16 +94,18 @@ final class ProcessCart implements RequestHandlerInterface
             'options' => ['regexp' => '/^[0-9]{13}$/']
         ]);
 
-        if ($bar_code === false || is_null($bar_code) || !$this->_isCodeValid($bar_code)) { // bug
-            return new Response(302, ['Location' => '/bag']);
+        // if there was a problem to validate the bar code, redirect to orders
+
+        if ($bar_code === false || is_null($bar_code) || !$this->_isCodeValid($bar_code)) {
+            return new Response(302, ['Location' => '/orders']);
         }
 
         if ($order === false || is_null($order) || $order === 0) {
 
             $dao = new GenericDao(Connect::newMysqlConnection(), 'orders');
 
-            $order_date = new \DateTimeImmutable();
-            $order = $dao->ic(['order_date' => $order_date->format('Y-m-d')]);
+            $order_date = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
+            $order = $dao->ic(['order_date' => $order_date->format('Y-m-d H:i:s')]);
 
             if ($order === false) { // Unable to include
                 return new Response(302, ['Location' => '/bag?order=' . $order]);
