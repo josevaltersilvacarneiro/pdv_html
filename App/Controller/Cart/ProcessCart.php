@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.5
+ * @version   Release: 0.0.6
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -178,29 +178,12 @@ final class ProcessCart implements RequestHandlerInterface
 
         if ($itemRecord !== false) {
             // if this item is already added
-            // amount ++ on order_items
-            // number_of_items_sold ++ on order_items
 
-            $itemQuery = <<<QUERY
-            UPDATE `order_items`
-            SET `amount` = `amount` + 1
-            WHERE `package` = :package AND `order` = :order
-            LIMIT 1;
-            QUERY;
-
-            $itemRecord = [
-                'order' => intval($itemRecord['order']),
-                'package' => intval($itemRecord['package'])
-            ];
-
-            $query1 = [$itemQuery, $itemRecord];
-            $query2 = $repository->cleanUpdate('packages', $packageRecord);
-
-            $repository->queryAll($query1, $query2); // ignore result
-
+            $this->_addExistingItem($packageRecord, $itemRecord);
             return new Response(200, ['Location' => '/bag?order=' . $order]);
         }
 
+        // the item doesn't added
         // searching by price
 
         $query = <<<QUERY
@@ -232,5 +215,43 @@ final class ProcessCart implements RequestHandlerInterface
         $repository->queryAll($query1, $query2); // ignore result
 
         return new Response(200, ['Location' => '/bag?order=' . $order]);
+    }
+
+    /**
+     * This method increases the amount on order_items
+     * and number_of_items_sold on packages when a
+     * product of this package already added.
+     * 
+     * @param array $packageRecord a array key-value to column and its value
+     * @param array $itemRecord a array key-value of the item added
+     * 
+     * @return bool true on success; false otherwise
+     */
+    private function _addExistingItem(
+        array $packageRecord, array $itemRecord
+    ): bool {
+        // amount ++ on order_items
+        // number_of_items_sold ++ on packages
+
+        $repository = new Repository();
+
+        $itemQuery = <<<QUERY
+        UPDATE `order_items`
+        SET `amount` = `amount` + 1
+        WHERE `package` = :package AND `order` = :order
+        LIMIT 1;
+        QUERY;
+
+        $itemRecord = [
+            'order' => intval($itemRecord['order']),
+            'package' => intval($itemRecord['package'])
+        ];
+
+        $query1 = [$itemQuery, $itemRecord];
+        $query2 = $repository->cleanUpdate('packages', $packageRecord);
+
+        $stmt = $repository->queryAll($query1, $query2);
+
+        return $stmt !== false && $stmt->rowCount() > 0;
     }
 }
