@@ -52,7 +52,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class Cart extends HTMLController
@@ -136,6 +136,6 @@ final class Cart extends HTMLController
         }
 
         // convert to string
-        return $sum . '';
+        return number_format($sum, 2, ',', '.');
     }
 }
