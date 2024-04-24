@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.1.0
+ * @version   Release: 0.2.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -100,20 +100,11 @@ final class ProcessCart implements RequestHandlerInterface
             return new Response(302, ['Location' => '/orders']);
         }
 
-        // if the order doesn't exist, create it
+        // if the order doesn't exist, you need to create it
 
-        if ($order === false || is_null($order) || $order < 1) {
-
-            $order = $this->_createOrder();
-            if ($order === false) {
-                return new Response(302, ['Location' => '/bag']);
-            }
-        }
-
-        // adding a item to order
+        $doNeedCreateTheOrder = $order === false || is_null($order) || $order < 1;
 
         // first, search by package
-        // verify if number_of_items_purchased - number_of_items_sold > 0 #STOCK
 
         $repository = new Repository();
 
@@ -128,6 +119,10 @@ final class ProcessCart implements RequestHandlerInterface
         // there was an error or this package doesn't exist
 
         if ($stmt === false || $stmt->rowCount() < 1) {
+            if ($doNeedCreateTheOrder) {
+                return new Response(302, ['Location' => '/bag']);
+            }
+
             return new Response(302, ['Location' => '/bag?order=' . $order]);
         }
 
@@ -139,37 +134,40 @@ final class ProcessCart implements RequestHandlerInterface
             $packageRecord['number_of_items_purchased'],
             $packageRecord['number_of_items_sold']
         )) {
+            if ($doNeedCreateTheOrder) {
+                return new Response(302, ['Location' => '/bag']);
+            }
+
             return new Response(302, ['Location' => '/bag?order=' . $order]);
         }
 
         // updating the number of items sold
 
         $package = intval($packageRecord['package_id']);
-        $packageRecord = [
-            'package_id' => $packageRecord['package_id'],
-            'number_of_items_sold' => intval($packageRecord['number_of_items_sold']) + 1
-        ];
+        $packageRecord['number_of_items_sold'] += 1;
 
-        // after this, search by ITEM with order and package
+        // if the order already exists, search by ITEM with order and package
 
-        $query = <<<QUERY
-        SELECT * FROM order_items
-        WHERE `order` = :order AND package = :package
-        LIMIT 1;
-        QUERY;
+        if (!$doNeedCreateTheOrder) {
+            $query = <<<QUERY
+            SELECT * FROM order_items
+            WHERE `order` = :order AND package = :package
+            LIMIT 1;
+            QUERY;
 
-        $stmt = $repository->query($query, ['order' => $order, 'package' => $package]);
-        $itemRecord = $stmt === false || $stmt->rowCount() < 1 ? false : $stmt->fetch(\PDO::FETCH_ASSOC);
+            $stmt = $repository->query($query, ['order' => $order, 'package' => $package]);
+            $itemRecord = $stmt === false || $stmt->rowCount() < 1 ? false : $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if ($itemRecord !== false) {
-            // if this item is already added
+            // if already exists a package with the same bar code added
 
-            $this->_addExistingItem($packageRecord, $itemRecord);
-            return new Response(200, ['Location' => '/bag?order=' . $order]);
+            if ($itemRecord !== false) {
+
+                $this->_addExistingItem($packageRecord, $itemRecord);
+                return new Response(200, ['Location' => '/bag?order=' . $order]);
+            }
         }
 
-        // the item doesn't added
-        // searching by price
+        // there is no package item added, search by price
 
         $query = <<<QUERY
         SELECT t.price FROM `types_of_product` AS t
@@ -187,19 +185,63 @@ final class ProcessCart implements RequestHandlerInterface
 
         $price = $stmt->fetch(\PDO::FETCH_ASSOC)['price'];
 
-        // adding a new item
+        // if order already exists on db
 
-        $query = <<<QUERY
-        INSERT INTO order_items (`order`, package, price)
-        VALUES (:order, :package, :price);
+        if (!$doNeedCreateTheOrder) {
+
+            $query1 = <<<QUERY
+            INSERT INTO order_items (`order`, package, price)
+            VALUES (:order, :package, :price);
+            QUERY;
+
+            $query2 = <<<QUERY
+            UPDATE `packages`
+            SET number_of_items_sold = number_of_items_sold + 1
+            WHERE package_id = :package;
+            QUERY;
+
+            $record1 = [$query1, ['order' => $order, 'package' => $package, 'price' => $price]];
+            $record2 = [$query2, ['package' => $package]];
+
+            // ignore results
+
+            $repository->queryAll($query1, $query2);
+
+            return new Response(200, ['Location' => '/bag?order=' . $order]);
+        }
+
+        // if the order doesn't exist
+
+        $orderDate = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
+        $orderDate = $orderDate->format('Y-m-d H:i:s');
+
+        $query1 = <<<QUERY
+        INSERT INTO `orders` (order_date)
+        VALUES (:order_date);
         QUERY;
 
-        $query1 = [$query, ['order' => $order, 'package' => $package, 'price' => $price]];
-        $query2 = $repository->cleanUpdate('packages', $packageRecord);
+        $query2 = <<<QUERY
+        INSERT INTO `order_items` (`order`, `package`, price)
+        VALUES (LAST_INSERT_ID(), :package, :price);
+        QUERY;
 
-        $repository->queryAll($query1, $query2); // ignore result
+        $query3 = <<<QUERY
+        UPDATE `packages`
+        SET number_of_items_sold = number_of_items_sold + 1
+        WHERE package_id = :package;
+        QUERY;
 
-        return new Response(200, ['Location' => '/bag?order=' . $order]);
+        $record1 = [$query1, ['order_date' => $orderDate]];
+        $record2 = [$query2, ['package' => $package, 'price' => $price]];
+        $record3 = [$query3, ['package' => $package]];
+
+        $stmt = $repository->queryAll($record1, $record2, $record3);
+
+        if ($stmt !== false && $stmt->rowCount() > 0) {
+            return new Response(200, ['Location' => '/orders']);
+        }
+
+        return new Response(302, ['Location' => '/bag']);
     }
 
     /**
@@ -216,32 +258,6 @@ final class ProcessCart implements RequestHandlerInterface
         $stock = $numberOfItemsPurchased - $numberOfItemsSold;
 
         return $stock > 0;
-    }
-
-    /**
-     * Create a order if is a first time that a item is
-     * being added.
-     * 
-     * @return bool order id on success; false otherwise
-     */
-    private function _createOrder(): false|int
-    {
-        $dao = new GenericDao(Connect::newMysqlConnection(), 'orders');
-
-        $order_date = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
-        $order = $dao->ic([
-            'order_date' => $order_date->format('Y-m-d H:i:s')
-        ]);
-
-        // Unable to include
-
-        if ($order === false) {
-            return false;
-        }
-
-        // conversion to int
-
-        return intval($order);
     }
 
     /**
