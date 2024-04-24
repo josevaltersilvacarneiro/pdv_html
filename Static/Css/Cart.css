@@ -64,7 +64,8 @@ table:first-child {
 }
 
 tr {
-    border: 0.2vh solid var(--quaternary);
+    border-top: 0.2vh solid var(--quaternary);
+    border-bottom: 0.2vh solid var(--quaternary);
 }
 
 tr:nth-child(even) {

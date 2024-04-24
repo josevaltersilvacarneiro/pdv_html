@@ -25,10 +25,12 @@
     height: 5vh;
     color: var(--quaternary);
     background-color: rgba(15, 4, 76, 0.3);
+
+    border-top: 0.2vh solid var(--quaternary);
 }
 
-.footer__item:first-of-type {
-    margin-top: 0px !important;
+.footer__item:last-of-type {
+    border-bottom: 0.2vh solid var(--quaternary);
 }
 
 .footer__item h2 {
@@ -43,6 +45,7 @@
 .footer__item a {
     height: 4vh;
     width: 4vh;
+
     background-image: url(../Images/Note.png);
     background-position: 50%;
     background-repeat: no-repeat;
