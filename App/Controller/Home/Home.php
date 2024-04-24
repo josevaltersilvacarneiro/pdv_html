@@ -38,6 +38,8 @@ use Josevaltersilvacarneiro\Html\App\Controller\HTMLController;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\{
     SessionEntityInterface};
 
+use Josevaltersilvacarneiro\Html\App\Model\Repository\Repository;
+
 use Nyholm\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -88,13 +90,53 @@ final class Home extends HTMLController
             return new Response(302, ['Location' => '/login']);
         }
 
-        $name = $this->session->getUser()->getFullname();
+        $repository = new Repository();
 
-        $this->setVariables(
-            [
-                'FULLNAME_' => $name->getFirstName() . ' ' . $name->getLastName(),
-            ]
-        );
+        $query1 = <<<QUERY
+        SELECT
+            CASE
+                WHEN MONTHNAME(MIN(o.order_date)) = 'January' THEN 'Janeiro'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'February' THEN 'Fevereiro'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'March' THEN 'Março'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'April' THEN 'Abril'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'May' THEN 'Maio'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'June' THEN 'Junho'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'July' THEN 'Julho'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'August' THEN 'Agosto'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'September' THEN 'Setembro'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'October' THEN 'Outubro'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'November' THEN 'Novembro'
+                WHEN MONTHNAME(MIN(o.order_date)) = 'December' THEN 'Dezembro'
+            END AS month, COALESCE(SUM(i.price * i.amount), 0) as total
+        FROM `order_items` AS i
+        INNER JOIN `orders` AS o
+        ON o.order_id = i.`order`
+        WHERE o.order_date >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+        GROUP BY YEAR(o.order_date), MONTH(o.order_date)
+        ORDER BY YEAR(o.order_date), MONTH(o.order_date);
+        QUERY;
+
+        $query2 = <<<QUERY
+        SELECT COALESCE(SUM(i.price * i.amount), 0) AS total FROM `order_items` AS i
+        INNER JOIN `orders` AS o
+        ON o.order_id = i.order
+        WHERE MONTH(o.order_date) = MONTH(CURRENT_DATE());
+        QUERY;
+
+        $query3 = <<<QUERY
+        SELECT COALESCE(SUM(purchase_cost), 0) AS total FROM `loads`
+        WHERE MONTH(due_date) = MONTH(CURRENT_DATE());
+        QUERY;
+
+        $stmt1 = $repository->query($query1);
+        $stmt2 = $repository->query($query2);
+        $stmt3 = $repository->query($query3);
+
+        $this->setVariables([
+            'MONTHLY_SALES_' => $stmt1 === false ? [] : $stmt1->fetchAll(\PDO::FETCH_ASSOC),
+            'INCOME_MONTH_' => $stmt2 === false ? 0 : $stmt2->fetch(\PDO::FETCH_ASSOC)['total'],
+            'MONTHLY_DEBT_' => $stmt3 === false ? 0 : $stmt3->fetch(\PDO::FETCH_ASSOC)['total'],
+        ]);
 
         return new Response(
             200, [

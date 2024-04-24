@@ -19,28 +19,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+.main__values {
+	font-size: 1.5em !important;
+	color: var(--secondary);
+}
+
+.main__text {
+	color: var(--ternary);
+}
+
 #main {
 	grid-template-columns: 2fr 2fr;
+	grid-template-rows: 3fr 3fr;
 }
 
 #graphic {
 	grid-column-start: 1;
 	grid-column-end: 4;
+	grid-row-start: 6;
+	grid-row-end: 1;
 }
 
-/*
-#main > div {
-	border: 1px solid #eee;
-	background-color: yellow;
-}*/
-
 #main > div > div {
-	background-color: pink;
+	background-color: var(--quaternary);
 }
 
 @media screen and (min-width: 768px) {
 
     #home__mvc {
 		background-color: var(--secondary) !important;
+	}
+
+	#graphic > div {
+		border-radius: 5px !important;
 	}
 }

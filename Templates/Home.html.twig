@@ -20,6 +20,11 @@
 {% extends "Main.html.twig" %}
 
 {% set _NEW_ITEM = URL_ ~ 'item' %}
+{% set INCOME_MONTH_ = INCOME_MONTH_ - MONTHLY_DEBT_ %}
+
+{% if INCOME_MONTH_ < 0 %}
+    {% set INCOME_MONTH_ = 0 %}
+{% endif %}
 
 {% block css %}
     {{ parent() }}
@@ -30,18 +35,85 @@
 
 <div id="main" class="d-grid h-100 w-100">
     <div id="sold" class="main__first p-2">
-        <div class="h-100">
-            test
+        <div class="h-100 rounded p-1">
+            <p class="main__values m-0 fw-bold">R$ {{ INCOME_MONTH_|number_format(2, ',', '.') }}</p>
+            <h2 class="main__text fs-6 fw-medium">Renda do Mês</h2>
         </div>
     </div>
     <div id="debt" class="main__first p-2">
-        <div class="h-100">
-            test
+        <div class="h-100 rounded p-1">
+            <p class="main__values m-0 fw-bold">R$ {{ MONTHLY_DEBT_|number_format(2, ',', '.') }}</p>
+            <h2 class="main__text fs-6 fw-medium">Dívida Mensal</h2>
         </div>
     </div>
     <div id="graphic" class="p-2">
         <div class="h-100">
-            test
+
+            <!-- graphic -->
+
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+                google.charts.load("current", {packages:['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+
+                    var data = google.visualization.arrayToDataTable([
+
+                        ["Mês", "Faturamento", { role: "style" } ],
+
+                        ["Janeiro", 500, "#787A91"],
+                        ["Fevereiro", 650.23, "#787A91"],
+                        ["Março", 1124, "#787A91"],
+
+                        {% for month in MONTHLY_SALES_ %}
+                        ["{{ month.month }}", {{ month.total }}, "#787A91"],
+                        {% endfor %}
+
+                        ["Maio", 500, "#787A91"],
+                        ["Junho", 650.23, "#787A91"],
+                        ["Julho", 1024, "#787A91"],
+                        ["Agosto", 200, "#787A91"],
+                        ["Setembro", 100, "#787A91"],
+                        ["Outubro", 265, "#787A91"],
+                        ["Novembro", 985.56, "#787A91"],
+                        ["Dezembro", 569.56, "#787A91"],
+
+                    ]);
+
+                    var formatter = new google.visualization.NumberFormat({
+                        decimalSymbol: ',',groupingSymbol: '.',
+                        fractionDigits: 2
+                    });
+
+                    formatter.format(data, 1); // Apply formatter to the second column (Vendas)
+
+                    var view = new google.visualization.DataView(data);
+                    view.setColumns([0, 1,
+                                      { calc: "stringify",
+                                        sourceColumn: 1,
+                                        type: "string",
+                                        role: "annotation" },
+                                      2]);
+
+                    var options = {
+                        title: "Receita do último ano",
+                        titleTextStyle: {
+                            color: '#141E61',
+                            fontSize: 18
+                        },
+                        width: "90%",
+                        height: "90%",
+                        
+                        backgroundColor: '#EEE',
+                        bar: {groupWidth: "95%"},
+                        legend: { position: "none" },
+                    };
+                    var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+                    chart.draw(view, options);
+                }
+            </script>
+            <div id="columnchart_values" class="h-100 w-100 d-flex justify-content-center align-items-center"></div>
+
         </div>
     </div>
 </div>
