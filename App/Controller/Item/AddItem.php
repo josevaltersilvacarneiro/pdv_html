@@ -52,7 +52,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.1.1
+ * @version   Release: 0.1.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class AddItem implements RequestHandlerInterface
@@ -85,7 +85,7 @@ final class AddItem implements RequestHandlerInterface
         // getting the parameters
 
         $title = filter_input(INPUT_POST, 'title');
-        $title = mb_convert_case($title, MB_CASE_TITLE, "UTF-8");
+        $title = mb_convert_case($title, MB_CASE_TITLE, 'UTF-8');
 
         $price = filter_input(INPUT_POST, 'price');
         $price = mb_ereg_replace('\.', '', $price);
