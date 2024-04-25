@@ -67,11 +67,11 @@
     color: var(--quaternary);
     background-color: rgba(15, 4, 76, 0.3);
 
-    border-top: 0.2vh solid var(--quaternary);
+    border-bottom: 0.2vh solid var(--quaternary);
 }
 
-.footer__item:last-of-type {
-    border-bottom: 0.2vh solid var(--quaternary);
+.footer__item:first-of-type {
+    border-top: 0.2vh solid var(--quaternary);
 }
 
 .footer__item a {
