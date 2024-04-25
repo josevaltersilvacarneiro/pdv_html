@@ -45,7 +45,7 @@
 
 </section>
 
-<section id="footer">
+<section id="footer" class="scrollbar">
 
     {% for product in PRODUCT_LIST_ %}
         <div class="footer__item mt-1 mt-sm-0 p-4 d-flex justify-content-between align-items-center">
@@ -63,7 +63,7 @@
     {% elseif PRODUCT_LIST_|length > 9 %}
 
         <div class="w-100 d-flex justify-content-center">
-            <a href="{{ ACTION_ }}" class="fs-3 mt-3 w-25 btn btn-outline-primary">Próxima</a>
+            <a href="{{ ACTION_ }}" id="next__btn" class="fs-6 mt-3 w-25 btn btn-outline-primary">Próxima</a>
         </div>
 
     {% endif %}

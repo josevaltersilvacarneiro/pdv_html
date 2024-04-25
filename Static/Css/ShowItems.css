@@ -65,7 +65,6 @@
     padding-left: 0.6vh !important;
     padding-right: 0.6vh !important;
     color: var(--quaternary);
-    background-color: rgba(15, 4, 76, 0.3);
 
     border-bottom: 0.2vh solid var(--quaternary);
 }
@@ -105,4 +104,8 @@
     #home__show__items {
 		background-color: var(--secondary) !important;
 	}
+
+    #next__btn {
+        font-size: 1.75em !important;
+    }
 }
