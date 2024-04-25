@@ -43,13 +43,13 @@ use Josevaltersilvacarneiro\Html\Src\Interfaces\Log\LogInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.4
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Classes/Log
  */
 class Log implements LogInterface
 {
-    private const FILENAME = __ROOT__ . 'Logs/';
-    private string $_filename = '/example/foo/bar.log';
+    private const FILENAME = _LOGS_DIRECTORY;
+    private string $_filename = 'bar.log';
     private int $_line = 0;
     private string $_message = 'It saves without setting the message';
 
@@ -57,9 +57,16 @@ class Log implements LogInterface
      * Initializes the log object.
      * 
      * @param string $logFilename The name of the log file
+     * 
+     * @throws RuntiemException if the dir cannot be created
      */
     public function __construct(private readonly string $logFilename)
     {
+        if (!file_exists(self::FILENAME)) {
+            if (!mkdir(self::FILENAME, 0700, true)) {
+                throw new RuntimeException('Unable to create directory', 10);
+            }
+        }
     }
 
     /**
@@ -115,7 +122,7 @@ class Log implements LogInterface
         $date->setTimezone(new \DateTimeZone(_TIMEZONE_));
 
         $message = <<<MESSAGE
-        {$date->format('Y-m-d H:i:s')} - IN "{$this->_filename}" on LINE {$this->_line}:~# {$this->_message} {PHP_EOL}
+        {$date->format('Y-m-d H:i:s')} - IN "{$this->_filename}" on LINE {$this->_line}:~# {$this->_message} \n
         MESSAGE;
 
         file_put_contents(

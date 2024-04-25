@@ -46,6 +46,8 @@ require_once 'Settings/Mail.php';
 include_once 'Settings/Server.php';
 include_once 'Settings/Public.php';
 
+require_once 'Settings/Private.php';
+
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Exceptions\AppExceptionInterface;
 
 use Josevaltersilvacarneiro\Html\Src\Classes\Container\Container;
