@@ -64,4 +64,8 @@
     .footer__item h2 {
         font-size: 1.15em;
     }
+
+    #next__btn {
+        width: 25% !important;
+    }
 }

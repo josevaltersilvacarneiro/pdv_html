@@ -44,7 +44,7 @@
 {% elseif ORDER_LIST_|length > 9 %}
 
     <div class="w-100 d-flex justify-content-center">
-        <a href="{{ URL_ ~ 'orders?limit=' ~ PAGINATION_ }}" class="fs-3 mt-3 w-25 btn btn-outline-primary">Next</a>
+        <a href="{{ URL_ ~ 'orders?limit=' ~ PAGINATION_ }}" id="next__btn" class="fs-3 mt-3 w-75 btn btn-outline-primary">Next</a>
     </div>
 
 {% endif %}
