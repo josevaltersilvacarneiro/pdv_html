@@ -24,7 +24,6 @@
     padding-right: 0.6vh !important;
     height: 5vh;
     color: var(--quaternary);
-    background-color: rgba(15, 4, 76, 0.3);
 
     border-top: 0.2vh solid var(--quaternary);
 }
