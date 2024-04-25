@@ -60,16 +60,6 @@
     color: var(--ternary);
 }
 
-#footer__next {
-    text-decoration: none;
-    color: var(--secondary);
-    background-color: var(--quaternary);
-}
-
-#footer__next:hover {
-    background-color: var(--ternary) !important;
-}
-
 .footer__item {
     height: 5vh;
     padding-left: 0.6vh !important;
