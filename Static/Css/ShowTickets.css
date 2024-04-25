@@ -21,7 +21,6 @@
 
 table {
     color: var(--quaternary);
-    border-collapse: collapse;
 }
 
 table:first-child {
@@ -29,8 +28,8 @@ table:first-child {
 }
 
 tr {
-    border: 0.2vh solid var(--quaternary);
-    
+    border-top: 0.2vh solid var(--quaternary);
+    border-bottom: 0.2vh solid var(--quaternary);
 }
 
 tr:nth-child(even) {
@@ -41,18 +40,13 @@ tr:nth-child(even) {
     color: var(--ternary);
 }
 
-#footer__next {
-    color: var(--primary);
-    border-color: var(--primary);
-}
-
-#footer__next:hover {
-    color: var(--quaternary);
-}
-
  @media screen and (min-width: 768px) {
 
     #home__ticket__list {
 		background-color: var(--secondary) !important;
 	}
+
+    #footer__next {
+        width: 25% !important;
+    }
 }
