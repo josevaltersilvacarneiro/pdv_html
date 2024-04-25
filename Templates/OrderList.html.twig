@@ -30,7 +30,7 @@
 
 {% for order in ORDER_LIST_ %}
     <div class="footer__item p-4 d-flex justify-content-between align-items-center">
-        <h2 class="m-0">O pedido <span>{{ order.order_id }}</span> realizado no dia <span>{{ order.order_date|date('d/m/Y À\\S H:i') }}</span> custou <span>R$ {{ order.total|replace({'.': ','}) }}</span></h2>
+        <h2 class="m-0">O pedido <span class="fw-bold">{{ order.order_id }}</span> realizado no dia <span>{{ order.order_date|date('d/m/Y À\\S H:i') }}</span> custou <span>R$ {{ order.total|replace({'.': ','}) }}</span></h2>
         <a href="{{ URL_ACTION_CART_ ~ order.order_id }}" class="border-0" title="Verificar"></a>
     </div>
 {% endfor %}
