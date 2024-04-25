@@ -95,8 +95,12 @@ try {
 } catch (AppExceptionInterface $e) {
     $e->storeLog();
 } catch (\Exception $e) {
-    echo $e->getMessage();
-    foreach ($e->getTrace() as $exc) {
-        echo var_dump($exc);
+    if (IS_DEVELOPMENT) {
+        echo $e->getMessage();
+        foreach ($e->getTrace() as $exc) {
+            echo var_dump($exc);
+        }
+    } else {
+        echo "Error";
     }
 }
