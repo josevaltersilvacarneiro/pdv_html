@@ -32,3 +32,4 @@ declare(strict_types=1);
  */
 
 define('IS_DEVELOPMENT', true);
+define('CACHE_DIRECTORY', $_ENV['CACHE_DIRECTORY'] ?? '');

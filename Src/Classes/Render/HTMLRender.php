@@ -52,7 +52,7 @@ use \Twig\Loader\FilesystemLoader;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.10.4
+ * @version   Release: 0.10.5
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Classes/Render
  */
 abstract class HTMLRender implements HtmlRenderInterface
@@ -154,11 +154,14 @@ abstract class HTMLRender implements HtmlRenderInterface
 	 * This method reders the layout and returns it.
 	 * 
 	 * @return string What is rendered for the user
+	 * @link https://twig.symfony.com/doc/3.x/api.html
 	 */
 	public function renderLayout(): string  
     {
 		$loader = new FilesystemLoader(self::PATH);
-		$twig   = new Environment($loader);
+		$twig   = IS_DEVELOPMENT ? new Environment($loader) : new Environment($loader, [
+			'cache' => CACHE_DIRECTORY
+		]);
 
 		$glbs = [
 			'PAGE_'        => $this->_page,
