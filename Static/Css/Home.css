@@ -49,8 +49,4 @@
     #home__mvc {
 		background-color: var(--secondary) !important;
 	}
-
-	#graphic > div {
-		border-radius: 5px !important;
-	}
 }
