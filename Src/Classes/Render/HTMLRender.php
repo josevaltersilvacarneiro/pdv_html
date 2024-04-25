@@ -52,7 +52,7 @@ use \Twig\Loader\FilesystemLoader;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.10.5
+ * @version   Release: 0.10.6
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Classes/Render
  */
 abstract class HTMLRender implements HtmlRenderInterface
@@ -159,7 +159,7 @@ abstract class HTMLRender implements HtmlRenderInterface
 	public function renderLayout(): string  
     {
 		$loader = new FilesystemLoader(self::PATH);
-		$twig   = IS_DEVELOPMENT ? new Environment($loader) : new Environment($loader, [
+		$twig   = IS_DEVELOPMENT ? new Environment($loader, ['debug' => true]) : new Environment($loader, [
 			'cache' => CACHE_DIRECTORY
 		]);
 
