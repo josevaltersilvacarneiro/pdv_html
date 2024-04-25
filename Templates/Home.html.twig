@@ -61,14 +61,18 @@
 
                         ["Mês", "Faturamento", { role: "style" } ],
 
+                    /*
                         ["Janeiro", 500, "#787A91"],
                         ["Fevereiro", 650.23, "#787A91"],
                         ["Março", 1124, "#787A91"],
+                        ["Abril", 1256, "#787A91"],
+                    */
 
                         {% for month in MONTHLY_SALES_ %}
                         ["{{ month.month }}", {{ month.total }}, "#787A91"],
                         {% endfor %}
 
+                    /*
                         ["Maio", 500, "#787A91"],
                         ["Junho", 650.23, "#787A91"],
                         ["Julho", 1024, "#787A91"],
@@ -77,6 +81,7 @@
                         ["Outubro", 265, "#787A91"],
                         ["Novembro", 985.56, "#787A91"],
                         ["Dezembro", 569.56, "#787A91"],
+                    */
 
                     ]);
 
