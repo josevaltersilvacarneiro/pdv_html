@@ -53,7 +53,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\DateTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.0.3
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessTicket implements RequestHandlerInterface
@@ -89,7 +89,7 @@ final class ProcessTicket implements RequestHandlerInterface
 
         $price = filter_input(INPUT_POST, 'price');
 
-        if ($price === false || is_null($price)) {
+        if ($price === false || is_null($price) || !preg_match('/^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$/', $price)) {
             return new Response(302, ['Location' => '/failed']);
         }
 
