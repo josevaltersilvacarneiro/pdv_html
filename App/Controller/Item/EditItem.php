@@ -53,7 +53,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class EditItem extends HTMLController
@@ -119,13 +119,11 @@ final class EditItem extends HTMLController
         // validating price
 
         $price = filter_input(INPUT_POST, 'price');
-        $edit_price = $price !== false && !is_null($price);
+        $edit_price = $price !== false && !is_null($price) && preg_match('/^(0|[1-9]\d{0,2}(\.\d{3})*),\d{2}$/', $price);
 
         if ($edit_price) {
             $price = mb_ereg_replace('\.', '', $price);
             $price = mb_ereg_replace(',', '.', $price);
-            $priceCopy = filter_var($price, FILTER_VALIDATE_FLOAT);
-            $edit_price = $priceCopy !== false;
         }
 
         // updating
