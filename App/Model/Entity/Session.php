@@ -67,7 +67,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\CryptTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.11.0
+ * @version   Release: 0.11.1
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
 #[UserSessionDao]
@@ -216,6 +216,16 @@ final class Session extends Entity implements SessionEntityInterface
         if (is_null($session) || $session->isExpired()) {
             return self::_createSession() ?? false;
         }
+
+        $request = new Request(
+            null,
+            new IpAttribute(__IP__),
+            new PortAttribute(__PORT__),
+            new DateAttribute
+        );
+
+        $session->setRequest($request)
+                ->flush();
 
         return $session;
     }
