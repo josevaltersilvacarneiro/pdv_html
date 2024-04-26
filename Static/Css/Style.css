@@ -53,4 +53,9 @@ body
     --bs-btn-hover-color: var(--quaternary);
     --bs-btn-border-color: var(--ternary);
     --bs-btn-hover-border-color: var(--ternary);
+
+    --bs-btn-hover-bg: transparent;
+
+    --bs-btn-focus-shadow-rgb: var(--quaternary);
+    --bs-btn-active-border-color: var(--quaternary);
 }
