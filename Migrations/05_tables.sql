@@ -18,6 +18,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+GRANT INSERT ON database_pdv.suppliers TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT ON database_pdv.loads TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT, UPDATE ON database_pdv.types_of_product TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT, UPDATE ON database_pdv.packages TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT ON database_pdv.`orders` TO 'app'@'%' WITH GRANT OPTION ;
+GRANT INSERT, UPDATE ON database_pdv.`order_items` TO 'app'@'%' WITH GRANT OPTION ;
+
 INSERT INTO `database_pdv`.`positions` (name, salary, payday)
 VALUES ("Operador de Caixa", 620, '10');
 

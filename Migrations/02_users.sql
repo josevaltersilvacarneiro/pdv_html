@@ -28,6 +28,6 @@ GRANT INSERT, UPDATE, DELETE ON database_pdv.employees TO 'app'@'%' WITH GRANT O
 GRANT INSERT, UPDATE, DELETE ON database_pdv.requests TO 'app'@'%' WITH GRANT OPTION ;
 GRANT INSERT, UPDATE, DELETE ON database_pdv.sessions TO 'app'@'%' WITH GRANT OPTION ;
 
-GRANT EXECUTE ON database_pdv.* TO 'app'@'%' WITH GRANT OPTION ;
+-- GRANT EXECUTE ON database_pdv.* TO 'app'@'%' WITH GRANT OPTION ;
 
 -- DROP USER 'app'@'%' ;

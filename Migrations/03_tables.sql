@@ -18,7 +18,6 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 CREATE TABLE IF NOT EXISTS `database_pdv`.`suppliers` (
 	supplier_id	TINYINT UNSIGNED	NOT NULL	AUTO_INCREMENT,
 
@@ -45,4 +44,3 @@ CREATE TABLE IF NOT EXISTS `database_pdv`.`loads` (
 	CONSTRAINT fk2_loads
 		FOREIGN KEY (supplier)		            REFERENCES `suppliers`	(supplier_id)
 );
-
