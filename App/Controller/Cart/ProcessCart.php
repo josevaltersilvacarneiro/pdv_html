@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.2.0
+ * @version   Release: 0.2.1
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -205,7 +205,7 @@ final class ProcessCart implements RequestHandlerInterface
 
             // ignore results
 
-            $repository->queryAll($query1, $query2);
+            $repository->queryAll($record1, $record2);
 
             return new Response(200, ['Location' => '/bag?order=' . $order]);
         }
