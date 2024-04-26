@@ -51,7 +51,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessNewSupplier implements RequestHandlerInterface
@@ -94,7 +94,7 @@ final class ProcessNewSupplier implements RequestHandlerInterface
 
         $name = mb_convert_case($name, MB_CASE_TITLE, 'UTF-8');
 
-        if (!$this->isCNPJValid($cnpj)) {
+        if (!$this->_isCNPJValid($cnpj)) {
             return new Response(302, ['Location' => '/failed']);
         }
 
@@ -130,7 +130,7 @@ final class ProcessNewSupplier implements RequestHandlerInterface
      * 
      * @return bool true on success; false otherwise
      */
-    private function isCNPJValid(string $cnpj): bool
+    private function _isCNPJValid(string $cnpj): bool
     {
         // Verificar se foi informado
         if(empty($cnpj)) {
