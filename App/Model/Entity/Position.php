@@ -40,7 +40,8 @@ use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\PositionEntityInterface
 use Josevaltersilvacarneiro\Html\App\Model\Entity\EntityWithIncrementalPrimaryKey;
 
 use Josevaltersilvacarneiro\Html\App\Model\Attributes\IncrementalPrimaryKeyAttribute;
-use Josevaltersilvacarneiro\Html\App\Model\Attributes\NameAttribute;
+use Josevaltersilvacarneiro\Html\App\Model\Attributes\PositionNameAttribute;
+use Josevaltersilvacarneiro\Html\App\Model\Attributes\SalaryAttribute;
 use Josevaltersilvacarneiro\Html\App\Model\Attributes\PaydayAttribute;
 
 /**
@@ -51,7 +52,7 @@ use Josevaltersilvacarneiro\Html\App\Model\Attributes\PaydayAttribute;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
 #[PositionDao]
@@ -64,7 +65,8 @@ final class Position extends EntityWithIncrementalPrimaryKey implements
     public function __construct(
         #[IncrementalPrimaryKeyAttribute('position_id')]
         private ?IncrementalPrimaryKeyAttribute $_positionId,
-        #[NameAttribute('name')] private ?NameAttribute $_name,
+        #[PositionNameAttribute('name')] private PositionNameAttribute $_name,
+        #[SalaryAttribute('salary')] private SalaryAttribute $_salary,
         #[PaydayAttribute('payday')] private ?PaydayAttribute $_payday)
     {
     }
