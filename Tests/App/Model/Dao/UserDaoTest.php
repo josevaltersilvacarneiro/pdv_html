@@ -43,7 +43,7 @@ use PHPUnit\Framework\TestCase;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Tests\App/Model/Dao
  */
 class UserDaoTest extends TestCase
@@ -93,28 +93,27 @@ class UserDaoTest extends TestCase
     public static function returnCreateUserDatabase(): array
     {
         $user1 = [
-            'user_id'   => 1,
+            'employee_id'=> 1,
+            'position'  => 1,
             'fullname'  => 'José Valter',
-            'email'     => 'uefs@josevaltersilvacarneiro.net',
-            'hash'      => '$2y$10$I8dud/n/.ew89tN/wZ8xw.zEi6U1zrJfS1c8ffqpKIaklmKIw.Wse',
-            'salt'      => 'c1pyo375pqt',
+            'email'     => 'test@josevaltersilvacarneiro.net',
+            'hash_code' => '$2y$10$I8dud/n/.ew89tN/wZ8xw.zEi6U1zrJfS1c8ffqpKIaklmKIw.Wse',
             'active'    => true
         ];
 
         $user2 = [
             'fullname' => 'José',
-            'email'    => 'uefs@josevaltersilvacarneiro.net',
-            'hash'     => '$2y$10$I8dud/n/.ew89tN/wZ8xw.zEi6U1zrJfS1c8ffqpKIaklmKIw.Wse',
-            'salt'     => 'c1pyo37a5pqt',
+            'position' => 1,
+            'email'    => 'test@josevaltersilvacarneiro.net',
+            'hash_code'=> '$2y$10$I8dud/n/.ew89tN/wZ8xw.zEi6U1zrJfS1c8ffqpKIaklmKIw.Wse',
             'active'   => false
         ];
 
         $user3 = [
-            'user_id'   => null,
+            'employee_id'   => null,
             'fullname'  => 'Valter Silva',
             'email'     => 'otherother@josevaltersilvacarneiro.net',
-            'hash'      => 'jose',
-            'salt'      => 'c1pyo375pqt',
+            'hash_code' => 'jose',
             'active'    => false
         ];
 
@@ -144,36 +143,32 @@ class UserDaoTest extends TestCase
     public static function returnCreateIdUserDatabase(): array
     {
         $user1 = [
-            'fullname' => 'Maria da Silva',
-            'email'    => 'test@test.com',
-            'hash'     => '',
-            'salt'     => '',
-            'active'   => false
+            'fullname'  => 'Maria da Silva',
+            'email'     => 'test@test.com',
+            'hash_code' => '',
+            'active'    => false
         ];
 
         $user2 = [
             'fullname' => 'Maria da Silva',
             'email'    => 'other@test.com',
-            'hash'     => 'anythinganythinganythinganythinganythinganythinganythinganything',
-            'salt'     => 'example',
+            'hash_code'     => 'anythinganythinganythinganythinganythinganythinganythinganything',
             'active'   => new \DateTime()
         ];
 
         $user3 = [
-            'fullname' => 'José',
-            'email'    => 'test@test.com',
-            'hash'     => 'otherhash',
-            'salt'     => 'anysalt',
-            'active'   => true
+            'fullname'  => 'José',
+            'email'     => 'test@test.com',
+            'hash_code' => 'otherhash',
+            'active'    => true
         ];
 
         $user4 = [
-            'fullname' => 'José Valter',
-            'email'    => 'test@josev.com',
-            'hash'     => 'asasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            'salt'     => 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
-            'active'   => false,
-            'foo'      => 'TEST'
+            'fullname'  => 'José Valter',
+            'email'     => 'test@josev.com',
+            'hash_code' => 'asasaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+            'active'    => false,
+            'foo'       => 'TEST'
         ];
 
         return [
@@ -231,7 +226,7 @@ class UserDaoTest extends TestCase
     public static function cleanUsers(): void
     {
         foreach (self::$createdUsers as $user) {
-            self::assertEquals(true, self::$dao->d(['user_id' => $user]));
+            self::assertEquals(true, self::$dao->d(['employee_id' => $user]));
         }
     }
 }

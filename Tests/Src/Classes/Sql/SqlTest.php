@@ -27,13 +27,13 @@ class SqlTest extends TestCase
     {
         $query1 = <<<QUERY
             INSERT INTO `requests`
-            (ip, port, access_date)
-            VALUES (:ip, :port, :access_date);
+            (ip, port, access_time)
+            VALUES (:ip, :port, :access_time);
         QUERY;
         $data1 = [
             'ip'          => '192.68.7.89',
             'port'        => '5263',
-            'access_date' => '2021-10-10 00:00:00',
+            'access_time' => '2021-10-10 00:00:00',
         ];
 
         $param1 = [$query1, $data1];
@@ -53,7 +53,7 @@ class SqlTest extends TestCase
 
         $query3 = <<<QUERY
             INSERT INTO `sessions`
-            (session_id, request)
+            (session_id, last_request)
             VALUES (:session_id, LAST_INSERT_ID());
         QUERY;
         $data3 = [
