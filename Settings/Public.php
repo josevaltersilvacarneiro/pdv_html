@@ -41,5 +41,5 @@ define('__CSS__',
     'Css'   .   DIRECTORY_SEPARATOR);		            // css files
 
 define('__JS__',
-    __URL__         .   'Public'    .   DIRECTORY_SEPARATOR .
-    'JavaScript'    .   DIRECTORY_SEPARATOR);	        // js files
+    __URL__         .   'Static'    .   DIRECTORY_SEPARATOR .
+    'Js'    .   DIRECTORY_SEPARATOR);	                // js files
