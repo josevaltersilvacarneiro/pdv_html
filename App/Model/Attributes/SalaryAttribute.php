@@ -42,7 +42,7 @@ use Josevaltersilvacarneiro\Html\Src\Classes\Exceptions\AttributeException;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2024 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Attributes
  */
 final class SalaryAttribute implements SalaryAttributeInterface
@@ -84,8 +84,12 @@ final class SalaryAttribute implements SalaryAttributeInterface
      */
     public static function newInstance(mixed $value): ?static
     {
+        if (!is_numeric($value)) {
+            return null;
+        }
+
         try {
-            return new static($value);
+            return new static(floatval($value));
         } catch (AttributeException) {
             return null;
         }
