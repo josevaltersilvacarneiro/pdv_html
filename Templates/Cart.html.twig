@@ -77,4 +77,10 @@
     {% endif %}
 </div>
 
+<script src="{{ JS_ ~ 'quagga.min.js' }}"></script>
+<script>
+    Quagga.onDetected(function (data) {
+        document.getElementById('header__left__code').value=data;
+    });
+</script>
 {% endblock %}
