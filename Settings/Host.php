@@ -28,7 +28,7 @@ declare(strict_types=1);
  */
 
 define('__ROOT__',
-    substr($_SERVER['DOCUMENT_ROOT'], -1) == DIRECTORY_SEPARATOR ?
-    $_SERVER['DOCUMENT_ROOT'] :
-    $_SERVER['DOCUMENT_ROOT'] . DIRECTORY_SEPARATOR
+    substr($_SERVER['DOCUMENT_ROOT'] ?? getenv('DOCUMENT_ROOT'), -1) == DIRECTORY_SEPARATOR ?
+    $_SERVER['DOCUMENT_ROOT'] ?? getenv('DOCUMENT_ROOT') :
+    ($_SERVER['DOCUMENT_ROOT'] ?? getenv('DOCUMENT_ROOT')) . DIRECTORY_SEPARATOR
 );

@@ -35,12 +35,12 @@ declare(strict_types=1);
 /* mail credentials                    */
 /*-------------------------------------*/
 
-define('_MAIL_SMTP', $_ENV['MAIL_SMTP']);
-define('_PORT_SMTP', $_ENV['PORT_SMTP']);
-define('_USER_SMTP', $_ENV['USER_SMTP']);
-define('_PASS_SMTP', $_ENV['PASS_SMTP']);
+define('_MAIL_SMTP', $_ENV['MAIL_SMTP'] ?? getenv('MAIL_SMTP'));
+define('_PORT_SMTP', $_ENV['PORT_SMTP'] ?? getenv('PORT_SMTP'));
+define('_USER_SMTP', $_ENV['USER_SMTP'] ?? getenv('USER_SMTP'));
+define('_PASS_SMTP', $_ENV['PASS_SMTP'] ?? getenv('PASS_SMTP'));
 
-define('_MAIN_FROM_NAME', $_ENV['MAIN_NAME']);
-define('_MAIL_FROM', $_ENV['MAIN_EMAIL_ADDRESS']);
-define('_MAIL_REPLY_NAME', $_ENV['REPLY_NAME']);
-define('_MAIL_REPLY', $_ENV['REPLY_EMAIL_ADDRESS']);
+define('_MAIN_FROM_NAME', $_ENV['MAIN_NAME'] ?? getenv('MAIN_NAME'));
+define('_MAIL_FROM', $_ENV['MAIN_EMAIL_ADDRESS'] ?? getenv('MAIN_EMAIL_ADDRESS'));
+define('_MAIL_REPLY_NAME', $_ENV['REPLY_NAME'] ?? getenv('REPLY_NAME'));
+define('_MAIL_REPLY', $_ENV['REPLY_EMAIL_ADDRESS'] ?? getenv('REPLY_EMAIL_ADDRESS'));

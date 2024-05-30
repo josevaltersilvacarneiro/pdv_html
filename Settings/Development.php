@@ -31,5 +31,5 @@ declare(strict_types=1);
  * @link     https://github.com/josevaltersilvacarneiro/html/tree/main/Settings
  */
 
-define('IS_DEVELOPMENT', true);
-define('CACHE_DIRECTORY', $_ENV['CACHE_DIRECTORY'] ?? '');
+define('IS_DEVELOPMENT', $_ENV['IS_DEVELOPMENT'] != false ?? getenv('IS_DEVELOPMENT') != false);
+define('CACHE_DIRECTORY', $_ENV['CACHE_DIRECTORY'] ?? getenv('CACHE_DIRECTORY'));

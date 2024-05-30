@@ -27,6 +27,6 @@ declare(strict_types=1);
  * @package	Settings
  */
 
-define('__IP__',	$_SERVER['REMOTE_ADDR']);					// the user's IP address
-define('__PORT__',	$_SERVER['REMOTE_PORT']);					// the user's port
-define('__URL__',	'http://' . $_SERVER['HTTP_HOST'] . '/');	// public url
+define('__IP__',	$_SERVER['REMOTE_ADDR'] ?? getenv('REMOTE_ADDR'));					// the user's IP address
+define('__PORT__',	$_SERVER['REMOTE_PORT'] ?? getenv('REMOTE_PORT'));					// the user's port
+define('__URL__',	'http://' . ($_SERVER['HTTP_HOST'] ?? getenv('HTTP_HOST')) . '/');	// public url

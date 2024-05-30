@@ -31,8 +31,8 @@ declare(strict_types=1);
 /* searching the directory to store the logs */
 /*-------------------------------------------*/
 
-if (mb_strlen($_ENV['LOGS_DIRECTORY']) === 0) {
+if (mb_strlen($_ENV['LOGS_DIRECTORY'] ?? getenv('LOGS_DIRECTORY')) === 0) {
     define('_LOGS_DIRECTORY', __ROOT__ . 'Logs/');
 } else {
-    define('_LOGS_DIRECTORY', $_ENV['LOGS_DIRECTORY']);
+    define('_LOGS_DIRECTORY', $_ENV['LOGS_DIRECTORY'] ?? getenv('LOGS_DIRECTORY'));
 }
