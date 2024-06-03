@@ -15,13 +15,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-apt-get install -y git
-`cd /var/www/html/Src/ && composer update --no-dev`
-apt-get purge -y git
+apt install git -y
+cd Src/ && composer update --no-dev
+apt purge git -y
+cd ../
 
-a2enmod rewrite
+rm -r .git
+rm -r .phpunit.cache
+rm -r Migrations/
+rm -r Tests/
+rm .env
+rm .gitignore
+rm dev.sh
+rm docker-composer.yaml
+rm Dockerfile
+rm example.env
+rm phpunit.xml
+rm requirements.txt
+rm start_server.sh
+rm unit_testing.sh
+rm index.html
 
-local REDIRECT="
+mkdir /var/cache/pdv/
+chown -R www-data:www-data /var/cache/pdv/
+
+REDIRECT="
 <Directory /var/www/html/>
     Options Indexes FollowSymLinks
     AllowOverride All
@@ -32,5 +50,3 @@ local REDIRECT="
 echo "${REDIRECT}" >> /etc/apache2/sites-available/000-default.conf
 
 service apache2 restart && rm build.sh
-
-# docker exec html service apache2 restart

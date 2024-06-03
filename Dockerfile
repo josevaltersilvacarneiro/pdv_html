@@ -13,17 +13,16 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-FROM ubuntu:23.10
+FROM ubuntu/apache2
 LABEL net.josevaltersilvacarneiro.author="José Carneiro <git@josevaltersilvacarneiro.net>"
 
 WORKDIR /var/www/html
 
-RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-RUN apt-get update && apt-get upgrade -y && apt-get install curl apache2 php8.2 php8.2_mysql php8.2-curl php8.2-gd php8.2-intl php8.2-xsl php8.2-mbstring -y
-RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-RUN rm -rf /var/www/html/*
+RUN apt update && apt upgrade -y
+RUN apt install php8.2 -y
+RUN apt install php8.2-mysql php8.2-curl php8.2-gd php8.2-intl php8.2-xsl php8.2-mbstring -y
+RUN apt autoremove -y
+RUN a2enmod rewrite && service apache2 restart
 
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 COPY . .
-
-EXPOSE 80 443
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]

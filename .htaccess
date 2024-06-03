@@ -1,0 +1,5 @@
+RewriteEngine   on
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteRule     ^(.*)$ index.php?REQUEST_URI=$1 [QSA,L]
+
+php_value memory_limit 256M
