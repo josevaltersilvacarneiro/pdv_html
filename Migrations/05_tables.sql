@@ -26,6 +26,9 @@ GRANT INSERT ON database_pdv.`orders` TO 'app'@'%' WITH GRANT OPTION ;
 GRANT INSERT, UPDATE ON database_pdv.`order_items` TO 'app'@'%' WITH GRANT OPTION ;
 
 INSERT INTO `database_pdv`.`positions` (name, salary, payday)
+VALUES ("Administrador", 1000, '10');
+
+INSERT INTO `database_pdv`.`positions` (name, salary, payday)
 VALUES ("Operador de Caixa", 620, '10');
 
 -- uefs@josevaltersilvacarneiro.net
