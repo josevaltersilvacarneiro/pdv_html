@@ -38,7 +38,7 @@ namespace Josevaltersilvacarneiro\Html\Src\Traits;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Traits
  */
 trait BarcodeTrait
@@ -50,17 +50,28 @@ trait BarcodeTrait
      * 
      * @return bool true on success; false otherwise
      */
-    private function _isCodeValid(string $code): bool
+    private function _isCodeValid(string $barcode): bool
     {
-        $codeArray = array_map(function ($element): int {
-            return intval($element);
-        }, str_split($code));
+        // Check if the barcode is a 13-digit number
+        if (!preg_match('/^\d{13}$/', $barcode)) {
+            return false;
+        }
 
-        $sumPairs = $codeArray[1] + $codeArray[3] + $codeArray[5] + $codeArray[7] + $codeArray[9] + $codeArray[11];
-        $oddSum = $codeArray[0] + $codeArray[2] + $codeArray[4] + $codeArray[6] + $codeArray[8] + $codeArray[10];
-        $result = $oddSum + $sumPairs * 3;
-        $checkDigit = 10 - $result % 10;
+        // Convert the barcode to an array of digits
+        $digits = str_split($barcode);
 
-        return $checkDigit === $codeArray[12];
+        // Calculate the checksum
+        $sum = 0;
+        for ($i = 0; $i < 12; $i++) {
+            // If the position is odd, multiply the digit by 1
+            // If the position is even, multiply the digit by 3
+            $sum += $digits[$i] * (($i % 2 === 0) ? 1 : 3);
+        }
+
+        // Calculate the check digit
+        $checkDigit = (10 - ($sum % 10)) % 10;
+
+        // Check if the calculated check digit matches the 13th digit of the barcode
+        return $checkDigit == $digits[12];
     }
 }
