@@ -27,6 +27,7 @@ rm -r Tests/
 rm .env
 rm .gitignore
 rm dev.sh
+rm create__password.php
 rm docker-composer.yaml
 rm Dockerfile
 rm example.env
