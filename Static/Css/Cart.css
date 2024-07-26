@@ -23,14 +23,23 @@ header {
     height: 25%;
 }
 
-#header__left__code, #header__left__submit {
+.header__form {
     height: 7vh;
     background-color: transparent;
     border-bottom: 0.2vh solid var(--ternary) !important;
 }
 
-#header__left__code, #header__left__code::placeholder {
+.header__form, #header__left__code::placeholder {
     color: var(--ternary);
+}
+
+#header__amount {
+    width: 15%;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }
 
 #header__left__submit {
@@ -98,7 +107,7 @@ td {
         height: 10%;
     }
 
-    #header__left__code, #header__left__submit {
+    .header__form {
         height: 5vh;
     }
 
@@ -106,7 +115,7 @@ td {
         width: 50%;
     }
 
-    #header__left__submit {
+    #header__amount, #header__left__submit {
         width: 7%;
     }
 

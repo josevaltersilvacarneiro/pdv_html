@@ -33,8 +33,9 @@
     <div id="header__left" class="hlr__device h-100 w-100 d-flex align-items-center">
         <form class="w-100 d-flex" method="POST" action="{{ PROCESS_ }}">
             <input type="hidden" name="order" value="{{ ORDER_ }}">
-            <input type="text" id="header__left__code" name="bar_code" class="border-0 fs-4" maxlength="13" placeholder="7891000315507" pattern="^[0-9]{13}$" required autofocus>
-            <input type="submit" id="header__left__submit" class="border-0" value="">
+            <input type="number" id="header__amount" name="amount" class="header__form border-0 fs-4 text-center" value="1" min="1" required>
+            <input type="text" id="header__left__code" name="bar_code" class="header__form border-0 fs-4" maxlength="13" placeholder="7891000315507" pattern="^[0-9]{13}$" required autofocus>
+            <input type="submit" id="header__left__submit" class="header__form border-0" value="">
         </form>
     </div>
 

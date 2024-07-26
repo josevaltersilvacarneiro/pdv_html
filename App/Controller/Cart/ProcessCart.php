@@ -55,7 +55,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.2.1
+ * @version   Release: 0.2.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessCart implements RequestHandlerInterface
@@ -89,14 +89,17 @@ final class ProcessCart implements RequestHandlerInterface
         }
 
         $order = filter_input(INPUT_POST, 'order', FILTER_VALIDATE_INT);
-
+        $amount = filter_input(INPUT_POST, 'amount', FILTER_VALIDATE_INT);
         $bar_code = filter_input(INPUT_POST, 'bar_code', FILTER_VALIDATE_REGEXP, [
             'options' => ['regexp' => '/^[0-9]{13}$/']
         ]);
 
-        // if there was a problem to validate the bar code, redirect to orders
+        // if there was a problem to validate the amount and bar code, redirect to orders
 
-        if ($bar_code === false || is_null($bar_code) || !$this->_isCodeValid($bar_code)) {
+        $isAmountNotValid = $amount === false || is_null($amount) || $amount < 1;
+        $isBarCodeNotValid = $bar_code === false || is_null($bar_code) || !$this->_isCodeValid($bar_code);
+
+        if ($isAmountNotValid || $isBarCodeNotValid) {
             return new Response(302, ['Location' => '/orders']);
         }
 
@@ -132,7 +135,8 @@ final class ProcessCart implements RequestHandlerInterface
 
         if (!$this->_isThereStockInThePackage(
             $packageRecord['number_of_items_purchased'],
-            $packageRecord['number_of_items_sold']
+            $packageRecord['number_of_items_sold'],
+            $amount
         )) {
             if ($doNeedCreateTheOrder) {
                 return new Response(302, ['Location' => '/bag']);
@@ -144,7 +148,7 @@ final class ProcessCart implements RequestHandlerInterface
         // updating the number of items sold
 
         $package = intval($packageRecord['package_id']);
-        $packageRecord['number_of_items_sold'] += 1;
+        $packageRecord['number_of_items_sold'] += $amount;
 
         // if the order already exists, search by ITEM with order and package
 
@@ -162,7 +166,7 @@ final class ProcessCart implements RequestHandlerInterface
 
             if ($itemRecord !== false) {
 
-                $this->_addExistingItem($packageRecord, $itemRecord);
+                $this->_addExistingItem($packageRecord, $itemRecord, $amount);
                 return new Response(200, ['Location' => '/bag?order=' . $order]);
             }
         }
@@ -190,18 +194,18 @@ final class ProcessCart implements RequestHandlerInterface
         if (!$doNeedCreateTheOrder) {
 
             $query1 = <<<QUERY
-            INSERT INTO order_items (`order`, package, price)
-            VALUES (:order, :package, :price);
+            INSERT INTO order_items (`order`, package, amount, price)
+            VALUES (:order, :package, :amount, :price);
             QUERY;
 
             $query2 = <<<QUERY
             UPDATE `packages`
-            SET number_of_items_sold = number_of_items_sold + 1
+            SET number_of_items_sold = number_of_items_sold + :amount
             WHERE package_id = :package;
             QUERY;
 
-            $record1 = [$query1, ['order' => $order, 'package' => $package, 'price' => $price]];
-            $record2 = [$query2, ['package' => $package]];
+            $record1 = [$query1, ['order' => $order, 'package' => $package, 'amount' => $amount, 'price' => $price]];
+            $record2 = [$query2, ['package' => $package, 'amount' => $amount]];
 
             // ignore results
 
@@ -221,19 +225,19 @@ final class ProcessCart implements RequestHandlerInterface
         QUERY;
 
         $query2 = <<<QUERY
-        INSERT INTO `order_items` (`order`, `package`, price)
-        VALUES (LAST_INSERT_ID(), :package, :price);
+        INSERT INTO `order_items` (`order`, `package`, amount, price)
+        VALUES (LAST_INSERT_ID(), :package, :amount, :price);
         QUERY;
 
         $query3 = <<<QUERY
         UPDATE `packages`
-        SET number_of_items_sold = number_of_items_sold + 1
+        SET number_of_items_sold = number_of_items_sold + :amount
         WHERE package_id = :package;
         QUERY;
 
         $record1 = [$query1, ['order_date' => $orderDate]];
-        $record2 = [$query2, ['package' => $package, 'price' => $price]];
-        $record3 = [$query3, ['package' => $package]];
+        $record2 = [$query2, ['package' => $package, 'amount' => $amount, 'price' => $price]];
+        $record3 = [$query3, ['amount' => $amount, 'package' => $package]];
 
         $stmt = $repository->queryAll($record1, $record2, $record3);
 
@@ -253,11 +257,11 @@ final class ProcessCart implements RequestHandlerInterface
      * @return bool true on success; false otherwise
      */
     private function _isThereStockInThePackage(
-        int $numberOfItemsPurchased, int $numberOfItemsSold
+        int $numberOfItemsPurchased, int $numberOfItemsSold, int $amount
     ): bool {
         $stock = $numberOfItemsPurchased - $numberOfItemsSold;
 
-        return $stock > 0;
+        return $stock >= $amount;
     }
 
     /**
@@ -271,7 +275,7 @@ final class ProcessCart implements RequestHandlerInterface
      * @return bool true on success; false otherwise
      */
     private function _addExistingItem(
-        array $packageRecord, array $itemRecord
+        array $packageRecord, array $itemRecord, int $amount
     ): bool {
         // amount ++ on order_items
         // number_of_items_sold ++ on packages
@@ -280,14 +284,15 @@ final class ProcessCart implements RequestHandlerInterface
 
         $itemQuery = <<<QUERY
         UPDATE `order_items`
-        SET `amount` = `amount` + 1
+        SET `amount` = `amount` + :amount
         WHERE `package` = :package AND `order` = :order
         LIMIT 1;
         QUERY;
 
         $itemRecord = [
             'order' => intval($itemRecord['order']),
-            'package' => intval($itemRecord['package'])
+            'package' => intval($itemRecord['package']),
+            'amount' => $amount
         ];
 
         $query1 = [$itemQuery, $itemRecord];
