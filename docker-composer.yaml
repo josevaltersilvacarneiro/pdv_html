@@ -3,6 +3,12 @@ services:
   apache:
     image: apache1
     ports:
-      - 8080:80
+      - 80:80
     env_file:
       - .env
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
