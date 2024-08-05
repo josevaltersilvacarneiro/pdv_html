@@ -53,7 +53,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.1
+ * @version   Release: 0.0.2
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ShowTickets extends HTMLController
@@ -97,6 +97,7 @@ final class ShowTickets extends HTMLController
         $query = <<<QUERY
         SELECT s.name, l.purchase_cost, l.due_date FROM `loads` AS l
         INNER JOIN suppliers AS s
+        ON l.supplier = s.supplier_id
         ORDER BY l.due_date DESC
         LIMIT :min, :max;
         QUERY;
