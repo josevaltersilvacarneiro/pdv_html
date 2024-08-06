@@ -40,3 +40,6 @@ VALUES (1, "José Carneiro", "uefs@josevaltersilvacarneiro.net", "$argon2id$v=19
 -- modifications
 
 ALTER TABLE packages DROP COLUMN validity;
+
+GRANT DELETE ON database_pdv.orders TO 'app'@'%' WITH GRANT OPTION ;
+GRANT DELETE ON database_pdv.order_items TO 'app'@'%' WITH GRANT OPTION ;
