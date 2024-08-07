@@ -36,3 +36,10 @@ VALUES ("Operador de Caixa", 620, '10');
 
 INSERT INTO `database_pdv`.`employees` (position, fullname, email, hash_code)
 VALUES (1, "José Carneiro", "uefs@josevaltersilvacarneiro.net", "$argon2id$v=19$m=65536,t=4,p=1$bjRSdVVoL2VFNTZjL0dzdA$Q1rlcf8vsIriv+2voQHR2APyTer/Wst53KLfOyNiTT8");
+
+-- modifications
+
+ALTER TABLE packages DROP COLUMN validity;
+
+GRANT DELETE ON database_pdv.orders TO 'app'@'%' WITH GRANT OPTION ;
+GRANT DELETE ON database_pdv.order_items TO 'app'@'%' WITH GRANT OPTION ;

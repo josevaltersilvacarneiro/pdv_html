@@ -52,7 +52,7 @@ use Psr\Http\Server\RequestHandlerInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class AbandonCart implements RequestHandlerInterface
@@ -83,22 +83,22 @@ final class AbandonCart implements RequestHandlerInterface
             return new Response(302, ['Location' => '/login']);
         }
 
-        $orderId = filter_input(INPUT_GET, 'order', FILTER_VALIDATE_INT);
+        $order = filter_input(INPUT_GET, 'order', FILTER_VALIDATE_INT);
 
-        if ($orderId === false || is_null($orderId) || $orderId < 1) {
+        if ($order === false || is_null($order) || $order < 1) {
             return new Response(302, ['Location' => '/bag']);
         }
 
-        // first, search by all items which the orderId is $orderId
+        // first, search by all items which the order is $order
 
         $repository = new Repository();
 
         $query = <<<QUERY
-        SELECT `order`, package FROM order_items
+        SELECT `order`, package, amount FROM order_items
         WHERE `order` = :order;
         QUERY;
 
-        $stmt = $repository->query($query, ['order' => $orderId]);
+        $stmt = $repository->query($query, ['order' => $order]);
 
         $orderItems = $stmt === false ? [] : $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
@@ -108,6 +108,7 @@ final class AbandonCart implements RequestHandlerInterface
         foreach ($orderItems as $item) {
             $orderId = intval($item['order']);
             $packageId = intval($item['package']);
+            $amount = intval($item['amount']);
 
             // WARNING -> the code below doesn't checking if
             // the number_of_items_sold = 0 (it would be an
@@ -115,7 +116,7 @@ final class AbandonCart implements RequestHandlerInterface
 
             $query1 = <<<QUERY
             UPDATE `packages`
-            SET number_of_items_sold = number_of_items_sold - 1
+            SET number_of_items_sold = number_of_items_sold - :amount
             WHERE package_id = :package;
             QUERY;
 
@@ -126,7 +127,7 @@ final class AbandonCart implements RequestHandlerInterface
 
             $record1 = [
                 $query1,
-                ['package' => $packageId]
+                ['package' => $packageId, 'amount' => $amount]
             ];
 
             $record2 = [
@@ -145,7 +146,7 @@ final class AbandonCart implements RequestHandlerInterface
         QUERY;
 
         $orderRecord = [$query, [
-            'order' => $orderId
+            'order' => $order
         ]];
 
         array_push($queries, $orderRecord);

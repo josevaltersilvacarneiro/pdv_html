@@ -54,7 +54,7 @@ use Josevaltersilvacarneiro\Html\Src\Traits\BarCodeTrait;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.1.0
+ * @version   Release: 0.1.1
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class ProcessPackage implements RequestHandlerInterface
@@ -121,22 +121,6 @@ final class ProcessPackage implements RequestHandlerInterface
             return new Response(302, ['Location' => '/failed']);
         }
 
-        // getting validity
-
-        $due_date = filter_input(INPUT_POST, 'due_date');
-
-        if ($due_date === false || is_null($due_date) || !$this->_isDueDateValid($due_date)) {
-            return new Response(302, ['Location' => '/failed']);
-        }
-
-        $dt = \DateTimeImmutable::createFromFormat('Y-m-d', $due_date);
-        $today = new \DateTimeImmutable();
-        $today = $today->setTime(0, 0, 0, 0);
-
-        if (!$dt || $dt < $today) {
-            return new Response(302, ['Location' => '/failed']);
-        }
-
         // if this bar code already be registered
 
         $query = <<<QUERY
@@ -172,8 +156,7 @@ final class ProcessPackage implements RequestHandlerInterface
             $record = $repository->cleanCreate('packages', [
                 'type_of_product' => $product,
                 'bar_code' => $code,
-                'number_of_items_purchased' => $amount,
-                'validity' => $due_date
+                'number_of_items_purchased' => $amount
             ]);
 
             if ($record === false) {
