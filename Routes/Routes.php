@@ -152,6 +152,15 @@ return [
         ]
     ],
 
+    # the route above deletes the item
+
+    'GET|/item/delete' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Item\DeleteItem::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
     'GET|/supplier/add' => [
         'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Supplier\NewSupplier::class,
         'dependencies' => [

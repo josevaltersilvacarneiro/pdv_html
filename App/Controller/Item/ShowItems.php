@@ -48,17 +48,17 @@ use Psr\Http\Message\ServerRequestInterface;
  * for items.
  * 
  * @category  ShowItems
- * @package   Josevaltersilvacarneiro\Html\App\Controllers\Item
+ * @package   Josevaltersilvacarneiro\Html\App\Controller\Item
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.1.1
- * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
+ * @version   Release: 0.1.2
+ * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Controller
  */
 final class ShowItems extends HTMLController
 {
     /**
-     * Initializes thw ShowItems Controller.
+     * Initializes the ShowItems Controller.
      * 
      * @param SessionEntityInterface $_session session
      * 
@@ -101,12 +101,16 @@ final class ShowItems extends HTMLController
             $product = '';
 
             $query = <<<QUERY
-            SELECT type_of_product_id, title FROM `types_of_product`
+            SELECT DISTINCT t.type_of_product_id, t.title, CASE WHEN p.package_id > 0 THEN 1 ELSE 0 END as 'hidden' FROM `types_of_product` AS t
+            LEFT JOIN `packages` AS p
+            ON t.type_of_product_id = p.type_of_product
             LIMIT :min, :max;
             QUERY;
         } else {
             $query = <<<QUERY
-            SELECT type_of_product_id, title FROM `types_of_product`
+            SELECT DISTINCT t.type_of_product_id, t.title, CASE WHEN p.package_id > 0 THEN 1 ELSE 0 END as 'hidden' FROM `types_of_product` AS t
+            LEFT JOIN `packages` AS p
+            ON t.type_of_product_id = p.type_of_product
             WHERE title LIKE :pattern
             LIMIT :min, :max;
             QUERY;
