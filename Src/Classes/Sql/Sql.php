@@ -39,7 +39,7 @@ namespace Josevaltersilvacarneiro\Html\Src\Classes\Sql;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.0.3
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Classes/Sql
  */
 abstract class Sql
@@ -50,6 +50,8 @@ abstract class Sql
         'string'  => \PDO::PARAM_STR,
         'NULL'    => \PDO::PARAM_NULL,
     ];
+
+    private int $_totalRowCount = 0;
 
     /**
      * Initializes the Sql.
@@ -68,6 +70,27 @@ abstract class Sql
     protected function getLastInsertedId(): string|false
     {
         return $this->conn->lastInsertId();
+    }
+
+    /**
+     * This method returns the number of rows affected by the last commits.
+     * 
+     * @return int Number of rows affected
+     */
+    public function getTotalRowCount(): int
+    {
+        return $this->_totalRowCount;
+    }
+
+    /**
+     * This method sets the number of rows affected by all commits
+     * in that instance.
+     * 
+     * @param int $total Number of rows affected by a single query
+     */
+    protected function setTotalRowCount(int $total): void
+    {
+        $this->_totalRowCount += $total;
     }
 
     /**
@@ -122,6 +145,8 @@ abstract class Sql
             $stmt = $this->conn->prepare($query);
             $this->_setParams($stmt, $parameters);
             $stmt->execute();
+
+            $this->setTotalRowCount($stmt->rowCount()); // increase num of rows affected
         } catch (\PDOException) {
             return false;
         }
@@ -151,6 +176,8 @@ abstract class Sql
                 $stmt = $this->conn->prepare($sql);
                 $this->_setParams($stmt, $parameters);
                 $stmt->execute();
+
+                $this->setTotalRowCount($stmt->rowCount()); // increase num of rows affected
             }
 
             $this->conn->commit();
