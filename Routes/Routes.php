@@ -217,6 +217,13 @@ return [
         ]
     ],
 
+    'GET|/bag/del' => [
+        'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Cart\DelItemFromCart::class,
+        'dependencies' => [
+            \Josevaltersilvacarneiro\Html\App\Model\Entity\Session::class
+        ]
+    ],
+
     'POST|/cart/process/add' => [
         'controller' => \Josevaltersilvacarneiro\Html\App\Controller\Cart\ProcessCart::class,
         'dependencies' => [

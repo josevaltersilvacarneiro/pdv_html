@@ -81,8 +81,13 @@ tr:nth-child(even) {
     background-color: var(--ternary);
 }
 
-td {
-    font-size: 0.9em;
+td, .btn__del {
+    font-size: 0.8em;
+}
+
+.btn__del, .btn__del:hover {
+    color: var(--quaternary);
+    border-color: var(--quaternary);
 }
 
 #main__total__price {

@@ -52,7 +52,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.2
+ * @version   Release: 0.0.3
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class Cart extends HTMLController
@@ -92,7 +92,7 @@ final class Cart extends HTMLController
             $itemList = [];
         } else {
             $query = <<<QUERY
-            SELECT t.title, o.amount, o.price, (o.amount * o.price) AS total FROM `order_items` AS o
+            SELECT t.title, o.order, o.package, o.amount, o.price, (o.amount * o.price) AS total FROM `order_items` AS o
             INNER JOIN packages AS p
             ON p.package_id = o.package
             INNER JOIN types_of_product AS t

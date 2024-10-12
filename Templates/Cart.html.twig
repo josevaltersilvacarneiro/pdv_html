@@ -72,6 +72,7 @@
             <td class="p-1">{{ item.amount }}</td>
             <td class="p-1">R$ {{ item.price|replace({'.': ','}) }}</td>
             <td class="p-1">R$ {{ item.total|replace({'.': ','}) }}</td>
+            <td class="p-1"><a href="{{ URL_ ~ 'bag/del?order=' ~ item.order ~ '&package=' ~ item.package }}" class="btn__del w-100 btn btn-outline-primary">Excluir</a></td>
         </tr>
         {% endfor %}
         </table>
