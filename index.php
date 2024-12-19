@@ -48,6 +48,10 @@ include_once 'Settings/Public.php';
 
 require_once 'Settings/Private.php';
 
+# using session
+
+session_start();
+
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Exceptions\AppExceptionInterface;
 
 use Josevaltersilvacarneiro\Html\Src\Classes\Container\Container;

@@ -30,9 +30,6 @@ declare(strict_types=1);
 
 namespace Josevaltersilvacarneiro\Html\Src\Interfaces\Entities;
 
-use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\{
-    EntityWithIncrementalPrimaryKeyInterface};
-
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Attributes\IpAttributeInterface;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Attributes\PortAttributeInterface;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Attributes\DateAttributeInterface;
@@ -43,12 +40,12 @@ use Josevaltersilvacarneiro\Html\Src\Interfaces\Attributes\DateAttributeInterfac
  * @category  RequestEntityInterface
  * @package   Josevaltersilvacarneiro\Html\Src\Interfaces\Entities
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
- * @copyright 2023 José Carneiro
+ * @copyright 2024 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.3
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Interfaces/Entities
  */
-interface RequestEntityInterface extends EntityWithIncrementalPrimaryKeyInterface
+interface RequestEntityInterface
 {
     /**
      * This method returns the IP address of the request.

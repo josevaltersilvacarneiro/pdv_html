@@ -9,7 +9,7 @@ declare(strict_types=1);
  * interact with the corresponding database records.
  * PHP VERSION >= 8.2.0
  * 
- * Copyright (C) 2023, José V S Carneiro
+ * Copyright (C) 2024, José V S Carneiro
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by  
@@ -33,11 +33,6 @@ declare(strict_types=1);
 
 namespace Josevaltersilvacarneiro\Html\App\Model\Entity;
 
-use Josevaltersilvacarneiro\Html\App\Model\Entity\Entity;
-use Josevaltersilvacarneiro\Html\App\Model\Dao\UserSessionDao;
-
-use Josevaltersilvacarneiro\Html\App\Model\Attributes\GeneratedPrimaryKeyAttribute;
-
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\SessionEntityInterface;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\RequestEntityInterface;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\UserEntityInterface;
@@ -51,59 +46,42 @@ use Josevaltersilvacarneiro\Html\App\Model\Attributes\DateAttribute;
 
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Exceptions\{
     AttributeExceptionInterface};
+use Josevaltersilvacarneiro\Html\Src\Interfaces\Exceptions\{
+    EntityExceptionInterface};
 
-use Josevaltersilvacarneiro\Html\Src\Traits\CryptTrait;
+use Josevaltersilvacarneiro\Html\Src\Classes\Exceptions\{
+    EntityException};
 
 /**
  * This class represents a session. It contains properties and methods to manage
  * session-related data and operations.
  * 
- * @var GeneratedPrimaryKeyAttribute $_sessionId  primary key
- * @var ?UserEntity         $_sessionUser foreign key
- * @var RequestEntity       $_request     foreign key
+ * @var ?UserEntity   $_sessionUser current user of the application
+ * @var RequestEntity $_request     request data
  * 
  * @category  Session
  * @package   Josevaltersilvacarneiro\Html\App\Model\Entity
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
- * @copyright 2023 José Carneiro
+ * @copyright 2024 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.11.1
+ * @version   Release: 0.12.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Model/Entity
  */
-#[UserSessionDao]
-final class Session extends Entity implements SessionEntityInterface
+final class Session implements SessionEntityInterface
 {
-    use CryptTrait;
-
-    private const PASSCRYPT = 'odpjosjsaldiorowenokwnfdkfweke';
-    private const NUMBER_OF_DAYS_TO_EXPIRE = 1;
-
     /**
      * This constructor is responsible for initializing a Session object
      * with the provided values.
      * 
-     * @param GeneratedPrimaryKeyAttribute $_sessionId   primary key
-     * @param ?User                        $_sessionUser foreign key
-     * @param Request                      $_request     foreign key
+     * @param ?User   $_sessionUser current user of the application
+     * @param Request $_request     request data
      * 
      * @return void
      */
     public function __construct(
-        #[GeneratedPrimaryKeyAttribute("session_id")] private
-        GeneratedPrimaryKeyAttribute $_sessionId,
         #[User("employee")] private ?User $_sessionUser,
         #[Request("last_request")] private Request $_request
     ) {
-    }
-
-    /**
-     * This method returns the name of the primary key property.
-     * 
-     * @return string Primary key property name
-     */
-    public static function getIdName(): string
-    {
-        return '_sessionId';
     }
 
     /**
@@ -117,19 +95,20 @@ final class Session extends Entity implements SessionEntityInterface
      * @param UserEntityInterface $user New user
      * 
      * @return static $this
-     * @throws \InvalidArgumentException If the provided user isn't active
+     * @throws EntityExceptionInterface If the provided user isn't active
      */
     public function setUser(UserEntityInterface $user): static
     {
         if ($this->isUserLogged() || !$user->isActive()) {
-            throw new \InvalidArgumentException(
+            throw new EntityException(
                 "This session belongs to another user or
 				{$user->getFullname()->getRepresentation()} isn't active",
                 1
             );
         }
 
-        $this->set($this->_sessionUser, $user);
+        $this->_sessionUser = $user;
+        $this->flush();
         return $this;
     }
 
@@ -141,15 +120,16 @@ final class Session extends Entity implements SessionEntityInterface
      * @param RequestEntityInterface $request New Request
      * 
      * @return static $this
-     * @throws \InvalidArgumentException If the request is old
+     * @throws EntityExceptionInterface If the request is old
      */
     public function setRequest(RequestEntityInterface $request): static
     {
         if ($this->getRequest()->getDate() > $request->getDate()) {
-            throw new \InvalidArgumentException("The request is old", 1);
+            throw new EntityException("The request is old", 1);
         }
 
-        $this->set($this->_request, $request);
+        $this->_request = $request;
+        $this->flush();
         return $this;
     }
 
@@ -174,17 +154,6 @@ final class Session extends Entity implements SessionEntityInterface
     }
 
     /**
-     * This method informs if the session is expired.
-     * 
-     * @return bool True if yes; false otherwise
-     */
-    public function isExpired(): bool
-    {
-        return $this->getRequest()->getDate()
-            ->diff(new DateAttribute, true)->days > self::NUMBER_OF_DAYS_TO_EXPIRE;
-    }
-
-    /**
      * This method informs if the user is logged in.
      * 
      * @return bool True if yes; false otherwise
@@ -203,53 +172,38 @@ final class Session extends Entity implements SessionEntityInterface
      */
     public static function fork(array $dependencies = []): static|false
     {
-        $cookie = $_COOKIE[self::KEYWORD] ?? null;
-
-        if (is_null($cookie) 
-            || ($sessionId = self::_decrypt($cookie, self::PASSCRYPT)) === false
-        ) {
+        if (!isset($_SESSION[self::KEYWORD])) {
             return self::_createSession() ?? false;
         }
 
-        $session = static::newInstance(new GeneratedPrimaryKeyAttribute($sessionId));
-
-        if (is_null($session) || $session->isExpired()) {
-            return self::_createSession() ?? false;
-        }
+        $session = unserialize($_SESSION[self::KEYWORD]);
 
         $request = new Request(
-            null,
             new IpAttribute(__IP__),
             new PortAttribute(__PORT__),
             new DateAttribute
         );
 
-        $session->setRequest($request)
-                ->flush();
-
+        $session->setRequest($request);
         return $session;
     }
 
     /**
      * This method is responsible for creating a new session
-     * on the database.
+     * and return it.
      * 
      * @return static|null A new session on success; null otherwise
      */
     private static function _createSession(): ?static
     {
-        $sessionId = GeneratedPrimaryKeyAttribute::generatePrimaryKey();
-
         try {
             $request = new Request(
-                null,
                 new IpAttribute(__IP__),
                 new PortAttribute(__PORT__),
                 new DateAttribute
             );
 
             $session = new Session(
-                new GeneratedPrimaryKeyAttribute($sessionId),
                 null,
                 $request
             );
@@ -257,13 +211,21 @@ final class Session extends Entity implements SessionEntityInterface
             return null;
         }
 
-        if ($session->flush()) {
-            $sessionIdEncrypted = self::_encrypt($sessionId, self::PASSCRYPT);
-            setcookie(self::KEYWORD, $sessionIdEncrypted);
-            return $session;
-        }
+        $session->flush();
 
-        return null;
+        return $session;
+    }
+
+    /**
+     * Updates the object representation.
+     * 
+     * @return true on success; false otherwise
+     */
+    public function flush(): true
+    {
+        $_SESSION[self::KEYWORD] = serialize($this);
+
+        return true;
     }
 
     /**
@@ -273,6 +235,18 @@ final class Session extends Entity implements SessionEntityInterface
      */
     public function killme(): bool
     {
-        return parent::killme() && setcookie(SessionEntityInterface::KEYWORD);
+        if (!session_unset()) return false;
+        if (!session_destroy()) return false;
+
+        // Delete the session cookie
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 3600,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+
+        return true;
     }
 }

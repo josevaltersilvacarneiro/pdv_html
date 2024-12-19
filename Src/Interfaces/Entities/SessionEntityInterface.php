@@ -32,7 +32,6 @@ namespace Josevaltersilvacarneiro\Html\Src\Interfaces\Entities;
 
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Dependency\DependencyInterface;
 
-use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\EntityInterface;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\UserEntityInterface;
 use Josevaltersilvacarneiro\Html\Src\Interfaces\Entities\RequestEntityInterface;
 
@@ -44,17 +43,14 @@ use Josevaltersilvacarneiro\Html\Src\Interfaces\Exceptions\EntityExceptionInterf
  * @category  SessionEntityInterface
  * @package   Josevaltersilvacarneiro\Html\Src\Interfaces\Entities
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
- * @copyright 2023 José Carneiro
+ * @copyright 2024 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.3
+ * @version   Release: 0.1.0
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/Src/Interfaces/Entities
  */
-interface SessionEntityInterface extends EntityInterface, DependencyInterface
+interface SessionEntityInterface extends DependencyInterface
 {
     public const KEYWORD = 'session';
-
-    // @example __construct(IncrementalPrimaryKeyAttributeInterface $pk,
-    //      UserEntityInterface $user, RequestEntityInterface $request);
 
     /**
      * Sets a new user for the session.
@@ -91,16 +87,16 @@ interface SessionEntityInterface extends EntityInterface, DependencyInterface
     public function getRequest(): RequestEntityInterface;
 
     /**
-     * Informs if the session is expired.
-     * 
-     * @return bool True if the session is expired; false otherwise
-     */
-    public function isExpired(): bool;
-
-    /**
      * Informs if the user is logged in.
      * 
      * @return bool True if the user is logged in; false otherwise
      */
     public function isUserLogged(): bool;
+
+    /**
+     * Updates the session object representation.
+     * 
+     * @return true on success; false otherwise
+     */
+    public function flush(): true;
 }
