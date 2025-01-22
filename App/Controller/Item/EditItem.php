@@ -53,7 +53,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * @author    José Carneiro <git@josevaltersilvacarneiro.net>
  * @copyright 2023 José Carneiro
  * @license   GPLv3 https://www.gnu.org/licenses/quick-guide-gplv3.html
- * @version   Release: 0.0.3
+ * @version   Release: 0.0.4
  * @link      https://github.com/josevaltersilvacarneiro/html/tree/main/App/Cotrollers
  */
 final class EditItem extends HTMLController
@@ -113,7 +113,7 @@ final class EditItem extends HTMLController
 
         if ($edit_title) {
             $title = mb_convert_case($title, MB_CASE_TITLE, "UTF-8");
-            $edit_title = $edit_title && !mb_ereg_match($record['title'], $title);
+            $edit_title = $record['title'] !== $title;
         }
 
         // validating price
