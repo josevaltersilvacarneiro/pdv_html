@@ -19,8 +19,8 @@ LABEL net.josevaltersilvacarneiro.author="José Carneiro <git@josevaltersilvacar
 WORKDIR /var/www/html
 
 RUN apt update && apt upgrade -y
-RUN apt install php8.2 -y
-RUN apt install php8.2-mysql php8.2-curl php8.2-gd php8.2-intl php8.2-xsl php8.2-mbstring -y
+RUN apt install php8.3 -y
+RUN apt install php8.3-mysql php8.3-curl php8.3-gd php8.3-intl php8.3-xsl php8.3-mbstring -y
 RUN apt autoremove -y
 RUN a2enmod rewrite && service apache2 restart
 
